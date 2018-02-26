@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class Tutor extends Aluno {
+public class Tutor {
 	
 	private Map<String, Integer> disciplinas;
 	private Map<String, String> horarios;
