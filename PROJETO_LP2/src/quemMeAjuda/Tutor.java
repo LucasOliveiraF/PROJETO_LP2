@@ -1,11 +1,11 @@
-package qma;
+package quemMeAjuda;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class Tutor {
+public class Tutor extends Aluno {
 	
 	private Map<String, Integer> disciplinas;
 	private Map<String, String> horarios;
