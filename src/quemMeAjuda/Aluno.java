@@ -44,6 +44,7 @@ public class Aluno implements Comparable<Aluno> {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((matricula == null) ? 0 : matricula.hashCode());
 		return result;
 	}
@@ -57,6 +58,11 @@ public class Aluno implements Comparable<Aluno> {
 		if (getClass() != obj.getClass())
 			return false;
 		Aluno other = (Aluno) obj;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
 		if (matricula == null) {
 			if (other.matricula != null)
 				return false;
@@ -71,6 +77,10 @@ public class Aluno implements Comparable<Aluno> {
 	
 	public String getNome() {
 		return nome;
+	}
+	
+	public String getEmail() {
+		return email;
 	}
 	
 	public String getInfoAluno(String atributo) throws Exception {
