@@ -20,16 +20,16 @@ public class Facade {
 		sistema.cadastrarAluno(nome, matricula, codigoCurso, telefone, email);
 	}
 	
-	public String recuperaAluno(String matricula) {
-		return "";
+	public String recuperaAluno(String matricula) throws Exception {
+		return this.sistema.recuperaAluno(matricula);
 	}
 	
 	public String listarAlunos() {
 		return sistema.listarAlunos();
 	}
 	
-	public String getInfoAluno(String matricula, String atributo) {
-		return "";
+	public String getInfoAluno(String matricula, String atributo) throws Exception {
+		return this.sistema.getInfoAluno(matricula,atributo);
 	}
 	
 	public void tornarTutor(String matricula, String disciplina, int proficiencia) throws Exception {

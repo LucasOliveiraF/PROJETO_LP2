@@ -18,15 +18,15 @@ public class SistemaTest {
 	@Test
 	public void tornarTutorTest() throws Exception {
 		sistema.cadastrarAluno("Aluno1", "110118009", 123, "", "aluno@ccc.ufcg.edu.br");
-		sistema.cadastrarAluno("Aluna1", "112118009", 123, "", "aluna@ccc.ufcg.edu.br");
+		sistema.cadastrarAluno("Aluna1", "112118009", 123, "000-999-999", "aluna@ccc.ufcg.edu.br");
 		sistema.tornarTutor("110118009", "Disciplina1", 4);
 		sistema.tornarTutor("112118009", "Disciplina1", 4);
 		
 		assertEquals("110118009 - Aluno1 - 123 - aluno@ccc.ufcg.edu.br", this.sistema.recuperaTutor("110118009"));
-		assertEquals("112118009 - Aluna1 - 123 - aluna@ccc.ufcg.edu.br", this.sistema.recuperaTutor("112118009"));
+		assertEquals("112118009 - Aluna1 - 123 - 000-999-999 - aluna@ccc.ufcg.edu.br", this.sistema.recuperaTutor("112118009"));
 		
 		assertEquals("110118009 - Aluno1 - 123 - aluno@ccc.ufcg.edu.br" + NL +
-				"112118009 - Aluna1 - 123 - aluna@ccc.ufcg.edu.br", sistema.listarTutores());
+				"112118009 - Aluna1 - 123 - 000-999-999 - aluna@ccc.ufcg.edu.br", sistema.listarTutores());
 		
 		sistema.cadastrarHorario("aluno@ccc.ufcg.edu.br", "08:00", "SEG");
 		sistema.cadastrarHorario("aluno@ccc.ufcg.edu.br", "10:00", "QUA");
@@ -80,17 +80,17 @@ public class SistemaTest {
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void recuperaTutorInexistente() {
+	public void recuperaTutorInexistente() throws Exception {
 		sistema.recuperaTutor("1029238");
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void recuperaTutorMatriculaVazia() {
+	public void recuperaTutorMatriculaVazia() throws Exception {
 		sistema.recuperaTutor("   ");
 	}
 	
 	@Test(expected=NullPointerException.class)
-	public void recuperaTutorMatriculaNula() {
+	public void recuperaTutorMatriculaNula() throws Exception {
 		sistema.recuperaTutor(null);
 	}
 	

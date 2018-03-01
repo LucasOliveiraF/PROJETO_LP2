@@ -15,15 +15,9 @@ public class Aluno implements Comparable<Aluno> {
 		if (matricula.trim().isEmpty() || matricula == null)
 			throw new IllegalArgumentException("Erro no cadastro de aluno: Matricula nao pode ser vazia ou nula");
 		if (nome.trim().isEmpty() || nome == null)
-<<<<<<< HEAD
 			throw new NullPointerException("Erro no cadastro de aluno: Nome nao pode ser vazio ou nulo");
 		if (codigoCurso <= 0)
 			throw new IllegalArgumentException("Erro no cadastro de aluno: Codigo do curso nao pode ser negativo");
-=======
-			throw new IllegalArgumentException("Erro no cadastro de aluno: Nome nao pode ser vazio ou nulo");
-		if (codigoCurso <= 0)
-			throw new Exception("Erro no cadastro de aluno: Codigo do curso nao pode ser negativo");
->>>>>>> 4089a119a2c481a741b7c1bb2fb4eabba28946a0
 		if (email.trim().isEmpty() || email == null)
 			throw new IllegalArgumentException("Erro no cadastro de aluno: Email invalido");
 		if (!email.matches("(.+)@(.+)"))
@@ -32,7 +26,7 @@ public class Aluno implements Comparable<Aluno> {
 		this.matricula  = matricula;
 		this.nome = nome;
 		this.codigoCurso = codigoCurso;
-		this.telefone = "";
+		this.telefone = telefone;
 		this.email = email;
 		this.avaliacao  = 5;
 		
@@ -40,7 +34,7 @@ public class Aluno implements Comparable<Aluno> {
 	
 	@Override
 	public String toString() {
-		if(this.telefone.trim() == "") {
+		if(this.telefone.trim().isEmpty()) {
 			return this.matricula + " - " + this.nome + " - " + this.codigoCurso + " - " + this.email;
 		}
 		return this.matricula + " - " + this.nome + " - " + this.codigoCurso + " - " + this.telefone + " - " + this.email;
@@ -85,21 +79,16 @@ public class Aluno implements Comparable<Aluno> {
 		return nome;
 	}
 	
-<<<<<<< HEAD
-	
 	public String getTelefone() {
 		return telefone;
 	}
 
-=======
->>>>>>> 4089a119a2c481a741b7c1bb2fb4eabba28946a0
 	public String getEmail() {
 		return email;
 	}
 	
 	public String getInfoAluno(String atributo) throws Exception {
-<<<<<<< HEAD
-		
+
 		if (atributo.equalsIgnoreCase("nome"))
 			return this.nome;			
 		if (atributo.equalsIgnoreCase("telefone") && !this.telefone.trim().isEmpty())
@@ -111,25 +100,10 @@ public class Aluno implements Comparable<Aluno> {
 	
 	}
 	
-=======
-		if (atributo.equalsIgnoreCase("nome"))
-			return this.nome;
-		else if (atributo.equalsIgnoreCase("telefone") && !this.telefone.trim().isEmpty())
-			return this.telefone;
-		else if (atributo.equalsIgnoreCase("email"))
-			return this.email;
-		else
-			throw new Exception();
-	}
-
->>>>>>> 4089a119a2c481a741b7c1bb2fb4eabba28946a0
 	@Override
 	public int compareTo(Aluno aluno) {
 		return this.nome.compareToIgnoreCase(aluno.getNome());
 	}
 	
 }
-<<<<<<< HEAD
-	
-=======
->>>>>>> 4089a119a2c481a741b7c1bb2fb4eabba28946a0
+

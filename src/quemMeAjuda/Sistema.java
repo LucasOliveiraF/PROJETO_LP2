@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class Sistema {
 	
@@ -19,7 +20,7 @@ public class Sistema {
 	}
 	
 	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email) throws Exception {
-<<<<<<< HEAD
+
 				
 		for (Aluno aluno : alunos) {
 			if (!email.matches("(.+)@(.+)"))
@@ -36,51 +37,40 @@ public class Sistema {
 		
 	}
 	
-	private Aluno recuperaAluno(String matricula) throws Exception{
-		for (Aluno aluno : alunos) {	
-			if(aluno.getMatricula() == matricula) 
-				return aluno;
-			
-			if(!(aluno.getMatricula() == matricula)) 
-				throw new Exception("Erro na busca por aluno: Aluno nao encontrado");
-			
-		}
-		return null;
-			}
-	
-=======
-		Aluno aluno = new Aluno(matricula, nome, codigoCurso, telefone, email);
-		alunos.add(aluno);
-		Collections.sort(this.alunos);
-	}
-	
-	private Aluno recuperaAluno(String matricula) {
-		for (Aluno aluno : alunos) {
-			if(aluno.getMatricula() == matricula) {
-				return aluno;
-			} 
-		}
+	public String recuperaAluno(String matricula) throws Exception {
 		
+		if (this.getAluno(matricula) == null)
+			throw new Exception("Erro na busca por aluno: Aluno nao encontrado");
+		
+		return this.getAluno(matricula).toString();
+	}
+	
+	private Aluno getAluno(String matricula) throws Exception{
+		for (Aluno aluno : alunos) {
+			if(aluno.getMatricula().equals(matricula))
+				return aluno;
+				
+		}
 		return null;
 	}
->>>>>>> 4089a119a2c481a741b7c1bb2fb4eabba28946a0
+
 	
 	
 	public String listarAlunos() {
 		String retornaAlunos = "";
 		for (Aluno aluno : alunos) {
-			retornaAlunos += aluno.toString() + NL;		
+			retornaAlunos += aluno.toString() + ", ";
 		}
-		return retornaAlunos.trim();
+		return retornaAlunos.substring(0, retornaAlunos.length() - 2);
 	}
 	
 	public void tornarTutor(String matricula, String disciplina, int proficiencia) throws Exception {
 		
-		if (this.recuperaAluno(matricula) == null) {
+		if (this.getAluno(matricula) == null) {
 			throw new Exception("Erro na definicao de papel: Tutor nao encontrado");
 		}
 		
-		Aluno aluno = this.recuperaAluno(matricula);
+		Aluno aluno = this.getAluno(matricula);
 		
 		if (this.tutores.containsKey(aluno)) {
 			this.tutores.get(aluno).cadastraDisciplina(disciplina, proficiencia);
@@ -90,23 +80,20 @@ public class Sistema {
 		}
 	}
 	
-<<<<<<< HEAD
+
 	public String recuperaTutor(String matricula) throws Exception {
-=======
-	public String recuperaTutor(String matricula) {
->>>>>>> 4089a119a2c481a741b7c1bb2fb4eabba28946a0
-		
+
 		if (matricula.trim().isEmpty() || matricula == null)
 			throw new IllegalArgumentException();
-		if (this.recuperaAluno(matricula) == null)
+		if (this.getAluno(matricula) == null)
 			throw new IllegalArgumentException("Erro na busca por tutor: Tutor nao encontrado");
 		
-		Aluno aluno = this.recuperaAluno(matricula);
+		Aluno aluno = this.getAluno(matricula);
 		
 		if (!this.tutores.containsKey(aluno))
 				throw new IllegalArgumentException("Erro na busca por tutor: Tutor nao encontrado");
 		
-		return this.recuperaAluno(matricula).toString();
+		return this.getAluno(matricula).toString();
 	}
 	
 	public String listarTutores() throws Exception {
@@ -115,12 +102,16 @@ public class Sistema {
 			throw new Exception();
 		
 		String retorno = "";
+		Set<Aluno> conj = this.tutores.keySet();
+		List<Aluno> lista = new ArrayList(conj);
+		Collections.sort(lista);
 		
-		for (Aluno aluno : this.tutores.keySet()) {
-			retorno += aluno.toString() + NL;
+		
+		for (Aluno aluno : lista) {
+			retorno += aluno.toString() + ", ";
 		}
 		
-		return retorno.trim();
+		return retorno.trim().substring(0, retorno.length() - 2);
 		
 	}
 	
@@ -181,6 +172,14 @@ public class Sistema {
 			throw new Exception();
 		
 		return this.tutores.get(temp);
+	}
+
+	public String getInfoAluno(String matricula, String atributo) throws Exception {
+		
+		if (this.getAluno(matricula) == null)
+			throw new NullPointerException("Erro na obtencao de informacao de aluno: Aluno nao encontrado");
+		
+		return this.getAluno(matricula).getInfoAluno(atributo);
 	}
 		
 }

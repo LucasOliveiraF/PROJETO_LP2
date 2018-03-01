@@ -55,9 +55,10 @@ public class AlunoTest {
 		@Test
 		public void getInfoAlunoTest() throws Exception {
 			Aluno aluno = new Aluno("116277865","Laura Farias", 2, "83 3342-6543", "laura.farias@ccc.ufcg.edu.br");
-			assertEquals("Laura Farias", aluno.getInfoAluno(aluno.getNome()));
-			assertEquals("83 3342-6543", aluno.getInfoAluno(aluno.getTelefone()));
-			assertEquals("laura.farias@ccc.ufcg.edu.br", aluno.getInfoAluno(aluno.getEmail()));
+			System.out.println(aluno.toString());
+			assertEquals("Laura Farias", aluno.getInfoAluno("nome"));
+			assertEquals("83 3342-6543", aluno.getInfoAluno("telefone"));
+			assertEquals("laura.farias@ccc.ufcg.edu.br", aluno.getInfoAluno("email"));
 		}
 		
 }
