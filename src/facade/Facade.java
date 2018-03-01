@@ -45,19 +45,19 @@ public class Facade {
 		return this.sistema.listarTutores();
 	}
 	
-	public void cadastrarHorario(String email, String horario, String dia) throws Exception {
+	public void cadastrarHorario(String email, String horario, String dia) {
 		this.sistema.cadastrarHorario(email, horario, dia);
 	}
 	
-	public void cadastrarLocalDeAtendimento(String email, String local) throws Exception {
+	public void cadastrarLocalDeAtendimento(String email, String local) {
 		this.sistema.cadastrarLocalDeAtendimento(email, local);
 	}
 	
-	public boolean consultaHorario(String email, String horario, String dia) throws Exception {
+	public boolean consultaHorario(String email, String horario, String dia) {
 		return this.sistema.consultaHorario(email, horario, dia);
 	}
 	
-	public boolean consultaLocal(String email, String local) throws Exception {
+	public boolean consultaLocal(String email, String local) {
 		return this.sistema.consultaLocal(email, local);
 	}
 	

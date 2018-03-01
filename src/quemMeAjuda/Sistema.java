@@ -96,10 +96,10 @@ public class Sistema {
 		return this.getAluno(matricula).toString();
 	}
 	
-	public String listarTutores() throws Exception {
+	public String listarTutores() {
 		
 		if (this.tutores.isEmpty())
-			throw new Exception();
+			throw new RuntimeException();
 		
 		String retorno = "";
 		Set<Aluno> conj = this.tutores.keySet();
@@ -115,49 +115,59 @@ public class Sistema {
 		
 	}
 	
-	public void cadastrarHorario(String email, String horario, String dia) throws Exception {
+	public void cadastrarHorario(String email, String horario, String dia) {
 		
 		if (email.trim().isEmpty() || email == null)
 			throw new IllegalArgumentException("Erro no cadastrar horario: email nao pode ser vazio ou em branco");
 		if (!email.matches("(.+)@(.+)"))
 			throw new IllegalArgumentException("Erro no cadastrar horario: Email invalido");
+		if (this.recuperaTutorPorEmail(email) == null)
+			throw new NullPointerException("Erro no cadastrar horario: tutor nao cadastrado");
 		
 		this.recuperaTutorPorEmail(email).cadastraHorario(horario, dia);
 		
 	}
 	
-	public void cadastrarLocalDeAtendimento(String email, String local) throws Exception {
+	public void cadastrarLocalDeAtendimento(String email, String local) {
 		
 		if (email.trim().isEmpty() || email == null)
 			throw new IllegalArgumentException("Erro no cadastrar local de atendimento: email nao pode ser vazio ou em branco");
 		if (!email.matches("(.+)@(.+)"))
 			throw new IllegalArgumentException("Erro no cadastrar local de atendimento: Email invalido");
+		if (this.recuperaTutorPorEmail(email) == null)
+			throw new NullPointerException("Erro no cadastrar local de atendimento: tutor nao cadastrado");
 		
 		this.recuperaTutorPorEmail(email).cadastraLocalDeAtendimento(local);
 		
 	}
 	
-	public boolean consultaHorario(String email, String horario, String dia) throws Exception {
+	public boolean consultaHorario(String email, String horario, String dia) {
 		if (email.trim().isEmpty() || email == null)
 			throw new IllegalArgumentException("Erro na consulta de Horario: email nao pode ser vazio ou em branco");
 		if (!email.matches("(.+)@(.+)"))
 			throw new IllegalArgumentException("Erro na consulta de Horario: Email invalido");
+		
+		if (this.recuperaTutorPorEmail(email) == null)
+			return false;
 		
 		return this.recuperaTutorPorEmail(email).consultaHorario(horario, dia);
 		
 		
 	}
 	
-	public boolean consultaLocal(String email, String local) throws Exception {
+	public boolean consultaLocal(String email, String local) {
 		if (email.trim().isEmpty() || email == null)
 			throw new IllegalArgumentException("Erro na consulta de local de atendimento: email nao pode ser vazio ou em branco");
 		if (!email.matches("(.+)@(.+)"))
 			throw new IllegalArgumentException("Erro na consulta de local de atendimento: Email invalido");
 		
+		if (this.recuperaTutorPorEmail(email) == null)
+			return false;
+		
 		return this.recuperaTutorPorEmail(email).consultaLocal(local);
 	}
 	
-	private Tutor recuperaTutorPorEmail(String email) throws Exception {
+	private Tutor recuperaTutorPorEmail(String email) {
 		
 		Aluno temp = null;
 		
@@ -169,7 +179,7 @@ public class Sistema {
 		}
 		
 		if (temp == null)
-			throw new Exception();
+			return null;
 		
 		return this.tutores.get(temp);
 	}
