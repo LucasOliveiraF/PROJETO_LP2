@@ -19,6 +19,7 @@ public class Sistema {
 	}
 	
 	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email) throws Exception {
+<<<<<<< HEAD
 				
 		for (Aluno aluno : alunos) {
 			if (!email.matches("(.+)@(.+)"))
@@ -47,6 +48,22 @@ public class Sistema {
 		return null;
 			}
 	
+=======
+		Aluno aluno = new Aluno(matricula, nome, codigoCurso, telefone, email);
+		alunos.add(aluno);
+		Collections.sort(this.alunos);
+	}
+	
+	private Aluno recuperaAluno(String matricula) {
+		for (Aluno aluno : alunos) {
+			if(aluno.getMatricula() == matricula) {
+				return aluno;
+			} 
+		}
+		
+		return null;
+	}
+>>>>>>> 4089a119a2c481a741b7c1bb2fb4eabba28946a0
 	
 	
 	public String listarAlunos() {
@@ -73,7 +90,11 @@ public class Sistema {
 		}
 	}
 	
+<<<<<<< HEAD
 	public String recuperaTutor(String matricula) throws Exception {
+=======
+	public String recuperaTutor(String matricula) {
+>>>>>>> 4089a119a2c481a741b7c1bb2fb4eabba28946a0
 		
 		if (matricula.trim().isEmpty() || matricula == null)
 			throw new IllegalArgumentException();
