@@ -11,6 +11,7 @@ public class Sistema {
 	
 	private List<Aluno> alunos;
 	private Map<Aluno, Tutor> tutores;
+	private List<Ajuda> ajudas;
 	private final String NL = System.lineSeparator();
 	
 	

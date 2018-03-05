@@ -8,7 +8,7 @@ public class Facade {
 	private Sistema sistema;
 	
 	public static void main(String[] args) {
-		args = new String[] {"facade.Facade", "acceptance_test/us1_test.txt", "acceptance_test/us2_test.txt", "acceptance_test/us3_test.txt"};
+		args = new String[] {"facade.Facade", "acceptance_test/us1_test.txt", "acceptance_test/us2_test.txt", "acceptance_test/us3_test.txt", "acceptance_test/us4_test.txt", "acceptance_test/us5_test.txt", "acceptance_test/us6_test.txt"};
 		EasyAccept.main(args);
 	}
 	
@@ -60,5 +60,24 @@ public class Facade {
 	public boolean consultaLocal(String email, String local) {
 		return this.sistema.consultaLocal(email, local);
 	}
+	
+	public int pedirAjudaPresencial (String matrAluno, String disciplina, String horario, String dia, String localInteresse) {
+		return 0;
+	}
+	
+	public int pedirAjudaOnline (String matrAluno, String disciplina) {
+		return 0;
+	}
+	
+	public String pegarTutor(int idAjuda) {
+		return "";
+	}
+	
+	public String getInfoAjuda(int idAjuda, String atributo) {
+		return "";
+	}
+	
+	
+
 	
 }
