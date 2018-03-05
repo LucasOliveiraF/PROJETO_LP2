@@ -17,7 +17,7 @@ public class AjudaPresencial extends Ajuda {
 		if (dia.trim().isEmpty() || dia == null)
 			throw new NullPointerException("Erro no pedido de ajuda presencial: dia nao pode ser vazio ou em branco");
 		if (localInteresse.trim().isEmpty() || localInteresse == null)
-			throw new NullPointerException("Erro no pedido de ajuda presencial: local de Interesse nao pode ser vazio ou em branco");
+			throw new NullPointerException("Erro no pedido de ajuda presencial: local de interesse nao pode ser vazio ou em branco");
 		
 		this.matrAluno = matrAluno;
 		this.matrTutor = matrTutor;

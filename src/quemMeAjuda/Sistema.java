@@ -194,6 +194,16 @@ public class Sistema {
 	}
 	
 	public int pedirAjudaPresencial (String matrAluno, String disciplina, String horario, String dia, String localInteresse) {
+		if (matrAluno.trim().isEmpty() || matrAluno == null)
+			throw new NullPointerException("Erro no pedido de ajuda presencial: matricula de aluno nao pode ser vazio ou em branco");
+		if (disciplina.trim().isEmpty() || disciplina == null)
+			throw new NullPointerException("Erro no pedido de ajuda presencial: disciplina nao pode ser vazio ou em branco");
+		if (horario.trim().isEmpty() || horario == null)
+			throw new NullPointerException("Erro no pedido de ajuda presencial: horario nao pode ser vazio ou em branco");
+		if (dia.trim().isEmpty() || dia == null)
+			throw new NullPointerException("Erro no pedido de ajuda presencial: dia nao pode ser vazio ou em branco");
+		if (localInteresse.trim().isEmpty() || localInteresse == null)
+			throw new NullPointerException("Erro no pedido de ajuda presencial: local de interesse nao pode ser vazio ou em branco");
 		if (this.getAluno(matrAluno) == null)
 			throw new NullPointerException("Erro ao pedia Ajuda: Aluno inexistente");
 		
@@ -215,6 +225,10 @@ public class Sistema {
 	}
 	
 	public int pedirAjudaOnline (String matrAluno, String disciplina) {
+		if (matrAluno.trim().isEmpty() || matrAluno == null)
+			throw new NullPointerException("Erro no pedido de ajuda online: matricula de aluno nao pode ser vazio ou em branco");
+		if (disciplina.trim().isEmpty() || disciplina == null)
+			throw new NullPointerException("Erro no pedido de ajuda online: disciplina nao pode ser vazio ou em branco");
 		if (this.getAluno(matrAluno) == null)
 			throw new NullPointerException("Erro ao pedia Ajuda: Aluno inexistente");
 		
@@ -236,11 +250,22 @@ public class Sistema {
 	}
 	
 	public String pegarTutor(int idAjuda) {
-		return this.ajudas.get(idAjuda).pegarTutor();
+		
+		if (idAjuda <= 0)
+			throw new IndexOutOfBoundsException("Erro ao tentar recuperar tutor : id nao pode menor que zero ");
+		if (idAjuda > this.ajudas.size())
+			throw new IndexOutOfBoundsException("Erro ao tentar recuperar tutor : id nao encontrado ");
+		
+		return this.ajudas.get(idAjuda-1).pegarTutor();
 	}
 	
 	public String getInfoAjuda(int idAjuda, String atributo) {
-		return this.ajudas.get(idAjuda).getInfoAjuda(atributo);
+		if (idAjuda <= 0)
+			throw new IndexOutOfBoundsException("Erro ao tentar recuperar info da ajuda : id nao pode menor que zero ");
+		if (idAjuda > this.ajudas.size())
+			throw new IndexOutOfBoundsException("Erro ao tentar recuperar info da ajuda : id nao encontrado ");
+		
+		return this.ajudas.get(idAjuda-1).getInfoAjuda(atributo);
 	}
 		
 }

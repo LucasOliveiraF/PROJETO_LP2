@@ -66,7 +66,7 @@ public class Facade {
 	}
 	
 	public int pedirAjudaOnline (String matrAluno, String disciplina) {
-		return this.pedirAjudaOnline(matrAluno, disciplina);
+		return this.sistema.pedirAjudaOnline(matrAluno, disciplina);
 	}
 	
 	public String pegarTutor(int idAjuda) {
@@ -74,7 +74,7 @@ public class Facade {
 	}
 	
 	public String getInfoAjuda(int idAjuda, String atributo) {
-		return this.getInfoAjuda(idAjuda, atributo);
+		return this.sistema.getInfoAjuda(idAjuda, atributo);
 	}
 	
 	

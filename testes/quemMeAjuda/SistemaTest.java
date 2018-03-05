@@ -250,7 +250,7 @@ public class SistemaTest {
 	}
 	
 	@Test
-	public void pedirAjudaPresencialTest() throws Exception {
+	public void pedirAjudaTest() throws Exception {
 		sistema.cadastrarAluno("Aluno1", "123", 123, "", "aluno1@aluno1");
 		sistema.cadastrarAluno("Aluno2", "456", 123, "", "aluno2@aluno2");
 		sistema.tornarTutor("123", "Programacao 2", 5);
