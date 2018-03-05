@@ -62,19 +62,19 @@ public class Facade {
 	}
 	
 	public int pedirAjudaPresencial (String matrAluno, String disciplina, String horario, String dia, String localInteresse) {
-		return 0;
+		return this.sistema.pedirAjudaPresencial(matrAluno, disciplina, horario, dia, localInteresse);
 	}
 	
 	public int pedirAjudaOnline (String matrAluno, String disciplina) {
-		return 0;
+		return this.pedirAjudaOnline(matrAluno, disciplina);
 	}
 	
 	public String pegarTutor(int idAjuda) {
-		return "";
+		return this.sistema.pegarTutor(idAjuda);
 	}
 	
 	public String getInfoAjuda(int idAjuda, String atributo) {
-		return "";
+		return this.getInfoAjuda(idAjuda, atributo);
 	}
 	
 	

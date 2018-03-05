@@ -12,12 +12,12 @@ public class Sistema {
 	private List<Aluno> alunos;
 	private Map<Aluno, Tutor> tutores;
 	private List<Ajuda> ajudas;
-	private final String NL = System.lineSeparator();
 	
 	
 	public Sistema() {
 		this.alunos = new ArrayList<>();
 		this.tutores = new HashMap<>();
+		this.ajudas = new ArrayList<>();
 	}
 	
 	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email) throws Exception {
@@ -46,7 +46,7 @@ public class Sistema {
 		return this.getAluno(matricula).toString();
 	}
 	
-	private Aluno getAluno(String matricula) throws Exception{
+	private Aluno getAluno(String matricula) {
 		for (Aluno aluno : alunos) {
 			if(aluno.getMatricula().equals(matricula))
 				return aluno;
@@ -191,6 +191,56 @@ public class Sistema {
 			throw new NullPointerException("Erro na obtencao de informacao de aluno: Aluno nao encontrado");
 		
 		return this.getAluno(matricula).getInfoAluno(atributo);
+	}
+	
+	public int pedirAjudaPresencial (String matrAluno, String disciplina, String horario, String dia, String localInteresse) {
+		if (this.getAluno(matrAluno) == null)
+			throw new NullPointerException("Erro ao pedia Ajuda: Aluno inexistente");
+		
+		String matrTutor = null;
+		
+		for (Aluno aluno : this.tutores.keySet()) {
+			Tutor tutor = this.tutores.get(aluno);
+			if (tutor.consultaDisciplinas(disciplina) && tutor.consultaHorario(horario, dia) && tutor.consultaLocal(localInteresse)) {
+				matrTutor = aluno.getMatricula();
+				break;
+			}
+		}
+		
+		Ajuda ajuda = new AjudaPresencial(matrAluno, matrTutor, disciplina, horario, dia, localInteresse);
+		
+		this.ajudas.add(ajuda);
+		
+		return this.ajudas.size();
+	}
+	
+	public int pedirAjudaOnline (String matrAluno, String disciplina) {
+		if (this.getAluno(matrAluno) == null)
+			throw new NullPointerException("Erro ao pedia Ajuda: Aluno inexistente");
+		
+		String matrTutor = null;
+		
+		for (Aluno aluno : this.tutores.keySet()) {
+			Tutor tutor = this.tutores.get(aluno);
+			if (tutor.consultaDisciplinas(disciplina)) {
+				matrTutor = aluno.getMatricula();
+				break;
+			}
+		}
+		
+		Ajuda ajuda = new AjudaOnline(matrAluno, matrTutor, disciplina);
+		
+		this.ajudas.add(ajuda);
+		
+		return this.ajudas.size();
+	}
+	
+	public String pegarTutor(int idAjuda) {
+		return this.ajudas.get(idAjuda).pegarTutor();
+	}
+	
+	public String getInfoAjuda(int idAjuda, String atributo) {
+		return this.ajudas.get(idAjuda).getInfoAjuda(atributo);
 	}
 		
 }

@@ -73,5 +73,12 @@ public class Tutor {
 		
 		return this.locais.contains(local);
 	}
+	
+	public boolean consultaDisciplinas(String disciplina) {
+		if (this.disciplinas.containsKey(disciplina))
+			return true;
+		else
+			return false;
+	}
 
 }

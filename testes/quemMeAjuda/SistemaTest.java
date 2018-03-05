@@ -5,6 +5,8 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import facade.Facade;
+
 public class SistemaTest {
 
 	Sistema sistema;
@@ -25,8 +27,7 @@ public class SistemaTest {
 		assertEquals("110118009 - Aluno1 - 123 - aluno@ccc.ufcg.edu.br", this.sistema.recuperaTutor("110118009"));
 		assertEquals("112118009 - Aluna1 - 123 - 000-999-999 - aluna@ccc.ufcg.edu.br", this.sistema.recuperaTutor("112118009"));
 		
-		assertEquals("110118009 - Aluno1 - 123 - aluno@ccc.ufcg.edu.br" + NL +
-				"112118009 - Aluna1 - 123 - 000-999-999 - aluna@ccc.ufcg.edu.br", sistema.listarTutores());
+		assertEquals("112118009 - Aluna1 - 123 - 000-999-999 - aluna@ccc.ufcg.edu.br, 110118009 - Aluno1 - 123 - aluno@ccc.ufcg.edu.br", sistema.listarTutores());
 		
 		sistema.cadastrarHorario("aluno@ccc.ufcg.edu.br", "08:00", "SEG");
 		sistema.cadastrarHorario("aluno@ccc.ufcg.edu.br", "10:00", "QUA");
@@ -119,7 +120,7 @@ public class SistemaTest {
 		sistema.cadastrarHorario("aluno@ccc.ufcg.edu", "08:00", "seg");
 	}
 	
-	@Test(expected=IllegalArgumentException.class)
+	@Test(expected=NullPointerException.class)
 	public void cadastraHorarioVazio() throws Exception {
 		sistema.cadastrarAluno("Aluno", "123", 1010, "", "aluno@aluno");
 		sistema.tornarTutor("123", "Disciplina", 5);
@@ -133,7 +134,7 @@ public class SistemaTest {
 		sistema.cadastrarHorario("aluno@aluno", null, "seg");
 	}
 	
-	@Test(expected=IllegalArgumentException.class)
+	@Test(expected=NullPointerException.class)
 	public void cadastraHorarioDiaVazio() throws Exception {
 		sistema.cadastrarAluno("Aluno", "123", 1010, "", "aluno@aluno");
 		sistema.tornarTutor("123", "Disciplina", 5);
@@ -162,7 +163,7 @@ public class SistemaTest {
 		sistema.cadastrarLocalDeAtendimento(null, "LCC1");
 	}
 	
-	@Test(expected=IllegalArgumentException.class)
+	@Test(expected=NullPointerException.class)
 	public void cadastraLocalLocalVazio() throws Exception {
 		sistema.cadastrarAluno("Aluno", "123", 1010, "", "aluno@aluno");
 		sistema.tornarTutor("123", "Disciplina", 5);
@@ -189,11 +190,6 @@ public class SistemaTest {
 	@Test(expected=Exception.class)
 	public void consultaHorarioEmailInvalido() throws Exception {
 		sistema.consultaHorario("@ccc.ufcg.edu", "08:00", "seg");
-	}
-	
-	@Test(expected=Exception.class)
-	public void consultaHorarioEmailNaoCadastrado() throws Exception {
-		sistema.consultaHorario("aluno@ccc.ufcg.edu", "08:00", "seg");
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
@@ -251,6 +247,18 @@ public class SistemaTest {
 		sistema.cadastrarAluno("Aluno", "123", 1010, "", "aluno@aluno");
 		sistema.tornarTutor("123", "Disciplina", 5);
 		sistema.consultaLocal("aluno@aluno", null);
+	}
+	
+	@Test
+	public void pedirAjudaPresencialTest() throws Exception {
+		sistema.cadastrarAluno("Aluno1", "123", 123, "", "aluno1@aluno1");
+		sistema.cadastrarAluno("Aluno2", "456", 123, "", "aluno2@aluno2");
+		sistema.tornarTutor("123", "Programacao 2", 5);
+		sistema.cadastrarHorario("aluno1@aluno1", "18:00", "seg");
+		sistema.cadastrarLocalDeAtendimento("aluno1@aluno1", "LCC3");
+		assertEquals(1, sistema.pedirAjudaPresencial("456", "Programacao 2", "18:00", "seg", "LCC3"));
+		assertEquals(2, sistema.pedirAjudaPresencial("456", "Programacao 2", "18:00", "seg", "LCC3"));
+		assertEquals(3, sistema.pedirAjudaOnline("456", "Programacao 2"));
 	}
 
 }

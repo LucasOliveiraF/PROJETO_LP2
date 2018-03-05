@@ -1,10 +1,12 @@
 package quemMeAjuda;
 
-public class Ajuda {
+public abstract class Ajuda {
 
+	protected String matrAluno, disciplina;
+	protected String matrTutor;
 	
-	public Ajuda(String matrAluno, Tutor tutor, String disciplina, String horario, String dia, String localinteresse) {
-		
-	}
+	public abstract String pegarTutor();
+	
+	public abstract String getInfoAjuda(String atributo);
 	
 }
