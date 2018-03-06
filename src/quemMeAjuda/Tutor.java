@@ -14,6 +14,7 @@ public class Tutor {
 	private Set<String> locais;
 	private int avaliacao;
 	private int dinheiro;
+	TutorType tipo;
 	
 	public Tutor() {
 		this.disciplinas = new HashMap<>();

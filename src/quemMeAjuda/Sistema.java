@@ -268,5 +268,22 @@ public class Sistema {
 		return this.ajudas.get(idAjuda-1).getInfoAjuda(atributo);
 	}
 		
+
+//	public String avaliarTutor (int idAjuda, int nota) {
+		
+	//	for (Ajuda ajuda : ajudas) {
+					
+			
+			
+		}
+			
+				
+			
+			
+		}
+		//pontuação_final = (pontuação_inicial*5 + pontuação_recebida) / 6
+		
+		
+	}
 }
 	
