@@ -44,6 +44,15 @@ public class TutorTest {
 		assertEquals(false, tutor.consultaLocal("LCC3"));
 	}
 	
+	@Test
+	public void tipoTest() {
+		assertEquals("TUTOR", tutor.tipo.toString());
+		tutor.setAvaliacao(3);
+		assertEquals("APRENDIZ", tutor.tipo.toString());
+		tutor.setAvaliacao(5);
+		assertEquals("TOP", tutor.tipo.toString());
+	}
+	
 	//Excecoes
 	
 	@Test(expected=IllegalArgumentException.class)
@@ -66,7 +75,7 @@ public class TutorTest {
 		tutor.cadastraDisciplina("Disciplina", 6);
 	}
 	
-	@Test(expected=IllegalArgumentException.class)
+	@Test(expected=NullPointerException.class)
 	public void cadastraHorarioVazio() throws Exception {
 		tutor.cadastraHorario(" ", "seg");
 	}
@@ -76,7 +85,7 @@ public class TutorTest {
 		tutor.cadastraHorario(null, "seg");
 	}
 	
-	@Test(expected=IllegalArgumentException.class)
+	@Test(expected=NullPointerException.class)
 	public void cadastraDiaVazio() throws Exception {
 		tutor.cadastraHorario("08:00", "  ");
 	}
@@ -91,7 +100,7 @@ public class TutorTest {
 		tutor.cadastraHorario("08:00", "dia");
 	}
 	
-	@Test(expected=IllegalArgumentException.class)
+	@Test(expected=NullPointerException.class)
 	public void cadastraLocalVazio() throws Exception {
 		tutor.cadastraLocalDeAtendimento("  ");;
 	}

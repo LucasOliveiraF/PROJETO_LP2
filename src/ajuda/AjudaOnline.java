@@ -1,4 +1,4 @@
-package quemMeAjuda;
+package ajuda;
 
 public class AjudaOnline extends Ajuda {
 

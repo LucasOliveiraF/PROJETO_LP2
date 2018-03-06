@@ -4,6 +4,10 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import ajuda.Ajuda;
+import ajuda.AjudaOnline;
+import ajuda.AjudaPresencial;
+
 public class AjudaTest {
 
 	@Test

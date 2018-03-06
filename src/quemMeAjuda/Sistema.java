@@ -7,6 +7,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import ajuda.Ajuda;
+import ajuda.AjudaOnline;
+import ajuda.AjudaPresencial;
+
 public class Sistema {
 	
 	private List<Aluno> alunos;
@@ -104,7 +108,7 @@ public class Sistema {
 		
 		String retorno = "";
 		Set<Aluno> conj = this.tutores.keySet();
-		List<Aluno> lista = new ArrayList(conj);
+		List<Aluno> lista = new ArrayList<>(conj);
 		Collections.sort(lista);
 		
 		
@@ -269,21 +273,23 @@ public class Sistema {
 	}
 		
 
-//	public String avaliarTutor (int idAjuda, int nota) {
+	public void avaliarTutor (int idAjuda, int nota) {
 		
-	//	for (Ajuda ajuda : ajudas) {
-					
-			
-			
-		}
-			
-				
-			
-			
-		}
-		//pontuação_final = (pontuação_inicial*5 + pontuação_recebida) / 6
+		if (idAjuda <= 0)
+			throw new IndexOutOfBoundsException("Erro na avaliacao de tutor: id nao pode menor que zero ");
+		if (idAjuda > this.ajudas.size())
+			throw new IndexOutOfBoundsException("Erro na avaliacao de tutor: id nao encontrado ");
+		if (this.ajudas.get(idAjuda-1).getAvaliado() == true)
+			throw new RuntimeException("Erro na avaliacao de tutor: Ajuda ja avaliada");
+		if (nota < 0)
+			throw new RuntimeException("Erro na avaliacao de tutor: nota nao pode ser menor que 0");
+		if (nota > 5)
+			throw new RuntimeException("Erro na avaliacao de tutor: nota nao pode ser maior que 5");
 		
+		Aluno aluno = this.getAluno(this.ajudas.get(idAjuda-1).getMatrTutor());
 		
+		this.tutores.get(aluno).setAvaliacao(nota);
+		this.ajudas.get(idAjuda-1).setAvaliado();
 	}
 }
 	

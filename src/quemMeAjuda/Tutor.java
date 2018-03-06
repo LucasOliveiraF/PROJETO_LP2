@@ -21,6 +21,7 @@ public class Tutor {
 		this.horarios = new HashMap<>();
 		this.locais = new HashSet<>();
 		this.avaliacao = 4;
+		this.tipo = this.tipo.TUTOR;
 		this.dinheiro = 0;
 	}
 	
@@ -81,5 +82,11 @@ public class Tutor {
 		else
 			return false;
 	}
+	
+	public void setAvaliacao(int avaliacao) {
+		this.avaliacao = ((this.avaliacao * 5) + avaliacao ) / 6;
+		this.tipo = this.tipo.getAvaliacao(avaliacao);
+	}
+	
 
 }
