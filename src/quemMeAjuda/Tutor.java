@@ -1,6 +1,7 @@
 package quemMeAjuda;
 
 import java.awt.List;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -12,16 +13,16 @@ public class Tutor {
 	private Map<String, Integer> disciplinas;
 	private Map<String, String> horarios;
 	private Set<String> locais;
-	private int avaliacao;
+	private double avaliacao;
 	private int dinheiro;
-	TutorType tipo;
+	TutorType nivel;
 	
 	public Tutor() {
 		this.disciplinas = new HashMap<>();
 		this.horarios = new HashMap<>();
 		this.locais = new HashSet<>();
 		this.avaliacao = 4;
-		this.tipo = this.tipo.TUTOR;
+		this.nivel = this.nivel.Tutor;
 		this.dinheiro = 0;
 	}
 	
@@ -84,8 +85,23 @@ public class Tutor {
 	}
 	
 	public void setAvaliacao(int avaliacao) {
+		
 		this.avaliacao = ((this.avaliacao * 5) + avaliacao ) / 6;
-		this.tipo = this.tipo.getAvaliacao(avaliacao);
+		this.nivel = this.nivel.getAvaliacao(avaliacao);
+	}
+	
+	public String pegarNota() {
+		double valor = this.avaliacao;
+		
+		DecimalFormat df = new DecimalFormat("0.00");
+		String temp = df.format(valor);
+		temp = temp.replace(".",",");
+		
+		return temp;
+	}
+	
+	public String pegarNivel() {
+		return this.nivel.toString();
 	}
 	
 

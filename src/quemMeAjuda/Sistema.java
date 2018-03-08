@@ -271,25 +271,44 @@ public class Sistema {
 		
 		return this.ajudas.get(idAjuda-1).getInfoAjuda(atributo);
 	}
-		
-
+	
 	public void avaliarTutor (int idAjuda, int nota) {
 		
+		if (nota < 0)
+			throw new RuntimeException("Erro na avaliacao de tutor: nota nao pode ser menor que 0");
+		if (nota > 5)
+			throw new RuntimeException("Erro na avaliacao de tutor: nota nao pode ser maior que 5");
 		if (idAjuda <= 0)
 			throw new IndexOutOfBoundsException("Erro na avaliacao de tutor: id nao pode menor que zero ");
 		if (idAjuda > this.ajudas.size())
 			throw new IndexOutOfBoundsException("Erro na avaliacao de tutor: id nao encontrado ");
 		if (this.ajudas.get(idAjuda-1).getAvaliado() == true)
 			throw new RuntimeException("Erro na avaliacao de tutor: Ajuda ja avaliada");
-		if (nota < 0)
-			throw new RuntimeException("Erro na avaliacao de tutor: nota nao pode ser menor que 0");
-		if (nota > 5)
-			throw new RuntimeException("Erro na avaliacao de tutor: nota nao pode ser maior que 5");
 		
 		Aluno aluno = this.getAluno(this.ajudas.get(idAjuda-1).getMatrTutor());
 		
 		this.tutores.get(aluno).setAvaliacao(nota);
 		this.ajudas.get(idAjuda-1).setAvaliado();
+	}
+	
+	public String pegarNota(String matriculaTutor) {
+		
+		if (this.getAluno(matriculaTutor) == null)
+			throw new NullPointerException("Erro ao pegar nota de tutor: Aluno nao encontrado");
+		if (!this.tutores.containsKey(this.getAluno(matriculaTutor)))
+			throw new NullPointerException("Erro ao pegar nota de tutor: Tutor nao encontrado");
+		
+		return this.tutores.get(this.getAluno(matriculaTutor)).pegarNota();
+	}
+	
+	public String pegarNivel(String matriculaTutor) {
+		
+		if (this.getAluno(matriculaTutor) == null)
+			throw new NullPointerException("Erro ao pegar nivel de tutor: Aluno nao encontrado");
+		if (!this.tutores.containsKey(this.getAluno(matriculaTutor)))
+			throw new NullPointerException("Erro ao pegar nivel de tutor: Tutor nao encontrado");
+		
+		return this.tutores.get(this.getAluno(matriculaTutor)).pegarNivel();
 	}
 }
 	

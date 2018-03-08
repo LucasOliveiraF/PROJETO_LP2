@@ -77,6 +77,18 @@ public class Facade {
 		return this.sistema.getInfoAjuda(idAjuda, atributo);
 	}
 	
+	public void avaliarTutor (int idAjuda, int nota) {
+		this.sistema.avaliarTutor(idAjuda, nota);
+	}
+	
+	public String pegarNota(String matriculaTutor) {
+		return this.sistema.pegarNota(matriculaTutor);
+	}
+	
+	public String pegarNivel(String matriculaTutor) {
+		return this.sistema.pegarNivel(matriculaTutor);
+	}
+	
 	
 
 	

@@ -46,11 +46,16 @@ public class TutorTest {
 	
 	@Test
 	public void tipoTest() {
-		assertEquals("TUTOR", tutor.tipo.toString());
+		assertEquals("TUTOR", tutor.nivel.toString());
 		tutor.setAvaliacao(3);
-		assertEquals("APRENDIZ", tutor.tipo.toString());
+		assertEquals("APRENDIZ", tutor.nivel.toString());
 		tutor.setAvaliacao(5);
-		assertEquals("TOP", tutor.tipo.toString());
+		assertEquals("TOP", tutor.nivel.toString());
+	}
+	
+	@Test()
+	public void pegarNotaTest() {
+		assertEquals("4,00", this.tutor.pegarNota());
 	}
 	
 	//Excecoes
