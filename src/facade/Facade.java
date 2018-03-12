@@ -100,5 +100,5 @@ public class Facade {
     public int totalDinheiroSistema() {
     	return this.sistema.totalDinheiroSistema();
     }
-	
+
 }

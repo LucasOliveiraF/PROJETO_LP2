@@ -18,7 +18,6 @@ public class Sistema {
 	private List<Ajuda> ajudas;
 	private int dinheiro = 0;
 	
-	
 	public Sistema() {
 		this.alunos = new ArrayList<>();
 		this.tutores = new HashMap<>();

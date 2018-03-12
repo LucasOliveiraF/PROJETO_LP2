@@ -55,7 +55,6 @@ public class SistemaTest {
 		System.out.println(sistema.totalDinheiroTutor("aluno@ccc.ufcg.edu.br"));
 		System.out.println(sistema.totalDinheiroSistema());
 	}
-	
 	// Excecoes
 	
 	@Test(expected=Exception.class)

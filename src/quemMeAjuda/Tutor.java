@@ -85,7 +85,6 @@ public class Tutor {
 	}
 	
 	public void setAvaliacao(int avaliacao) {
-		
 		this.avaliacao = ((this.avaliacao * 5.0) + avaliacao ) / 6.0;
 		this.nivel = this.nivel.getAvaliacao(this.avaliacao);
 	}
@@ -103,7 +102,7 @@ public class Tutor {
 	public String pegarNivel() {
 		return this.nivel.toString();
 	}
-	
+
 	public double getAvaliacao() {
 		return avaliacao;
 	}
