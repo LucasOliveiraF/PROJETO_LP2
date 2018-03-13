@@ -18,6 +18,11 @@ import tutor.OrdemTutorPorMatricula;
 import tutor.OrdemTutorPorNome;
 import tutor.Tutor;
 
+/**
+ * Representa o sistema de pedir ajudas, cadastrar alunos, tutores, avaliar e pedir informacoes
+ *
+ */
+
 public class Sistema {
 	
 	private List<Aluno> alunos;
@@ -27,6 +32,10 @@ public class Sistema {
 	private Comparator<Aluno> ordemAluno;
 	private Comparator<Tutor> ordemTutor;
 	
+	/**
+	 * Inicializa o sistema
+	 */
+	
 	public Sistema() {
 		this.alunos = new ArrayList<>();
 		this.tutores = new ArrayList<>();
@@ -34,6 +43,15 @@ public class Sistema {
 		this.ordemAluno = new OrdemAlunoPorNome();
 		this.ordemTutor = new OrdemTutorPorNome();
 	}
+	
+	/**
+	 * Cadastra um aluno a partir do nome, matricula, codigo do curso, telefone se houver (se nao houver, usar string vazia) e email
+	 * @param nome nome do aluno
+	 * @param matricula matricula do aluno (unica)
+	 * @param codigoCurso codigo do curso
+	 * @param telefone telefone do aluno (se houver)
+	 * @param email email do aluno (unico)
+	 */
 	
 	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email) {
 
@@ -50,12 +68,25 @@ public class Sistema {
 		
 	}
 	
+	/**
+	 * Recupera a representacao textual de um aluno de acordo com a matricula passada como parametro
+	 * @param matricula matricula do aluno
+	 * @return retorna a representacao textual de um aluno
+	 * @throws Exception lanca excecao caso matricula se invalida
+	 */
+	
 	public String recuperaAluno(String matricula) throws Exception {
 		if (this.getAluno(matricula) == null)
 			throw new Exception("Erro na busca por aluno: Aluno nao encontrado");
 		
 		return this.getAluno(matricula).toString();
 	}
+	
+	/**
+	 * Procura um aluno na colecao de alunos de acordo com a matricula passada como parametro
+	 * @param matricula matricula do aluno
+	 * @return retorna um aluno
+	 */
 	
 	private Aluno getAluno(String matricula) {
 		for (Aluno aluno : alunos) {
@@ -65,6 +96,11 @@ public class Sistema {
 		return null;
 	}
 
+	/**
+	 * Retorna a representacao textual de todos os alunos cadastrados no sistema separados por virgula
+	 * @return retorna a representacao textual de todos os alunos do sistema
+	 */
+	
 	public String listarAlunos() {
 		String retornaAlunos = "";
 		for (Aluno aluno : alunos) {
@@ -72,6 +108,14 @@ public class Sistema {
 		}
 		return retornaAlunos.substring(0, retornaAlunos.length() - 2);
 	}
+	
+	/**
+	 * Torna em tutor, um aluno do sistema 
+	 * @param matricula matricula do aluno
+	 * @param disciplina disciplina que o aluno se tornara tutor
+	 * @param proficiencia proficiencia do aluno na disciplina
+	 * @throws Exception lanca uma excecao caso algum dos parametros seja invalido
+	 */
 	
 	public void tornarTutor(String matricula, String disciplina, int proficiencia) throws Exception {
 		
@@ -93,6 +137,13 @@ public class Sistema {
 		
 	}
 	
+	/**
+	 * Recupera a representacao textual de um tutor de acordo com a matricula passada como parametro
+	 * @param matricula matricula do tutor
+	 * @return retorna a representacao textual de um tutor
+	 * @throws Exception lanca uma excecao caso a matricula seja invalida
+	 */
+	
 	public String recuperaTutor(String matricula) throws Exception {
 
 		Excecao.validaString(matricula, "Erro na busca por tutor: matricula nao pode ser vazia ou nula");
@@ -104,6 +155,11 @@ public class Sistema {
 		
 		return this.getAluno(matricula).toString();
 	}
+	
+	/**
+	 * Retorna a representacao textual de todos os tutores cadastrados no sistema, separados por virgula
+	 * @return Retorna a representacao textual de todos os tutores cadastrados no sistema
+	 */
 	
 	public String listarTutores() {
 		
@@ -120,6 +176,13 @@ public class Sistema {
 		
 	}
 	
+	/**
+	 * Cadastra um horario e dia no tutor com o email especificado
+	 * @param email email do tutor
+	 * @param horario horario disponivel do tutor
+	 * @param dia dia disponivel do tutor
+	 */
+	
 	public void cadastrarHorario(String email, String horario, String dia) {
 		
 		Excecao.validaEmail(email, "no cadastrar horario");
@@ -130,6 +193,12 @@ public class Sistema {
 		
 	}
 	
+	/**
+	 * Cadastra um local de atendimento no tutor com o email especificado
+	 * @param email email do tutor
+	 * @param local local de atendimento disponivel do tutor
+	 */
+	
 	public void cadastrarLocalDeAtendimento(String email, String local) {
 		
 		Excecao.validaEmail(email, "no cadastrar local de atendimento");
@@ -139,6 +208,14 @@ public class Sistema {
 		this.getTutor("email", email).cadastraLocalDeAtendimento(local);
 		
 	}
+	
+	/**
+	 * Varifica se o horario e dia passados como parametro estao disponiveis para o tutor com o email especificado
+	 * @param email email do tutor
+	 * @param horario horario a ser verificado
+	 * @param dia dia a ser verificado
+	 * @return retorna true caso o horario e dia estejam disponiveis e false caso contrario
+	 */
 	
 	public boolean consultaHorario(String email, String horario, String dia) {
 		Excecao.validaEmail(email, "na consulta de Horario");
@@ -151,6 +228,13 @@ public class Sistema {
 		
 	}
 	
+	/**
+	 * Verifica se o local de atendimento passado como parametro esta disponivel para o tutor com o email especificado
+	 * @param email email do tutor
+	 * @param local local de atendimento a ser verificado
+	 * @return retorna true caso o local de atendimento esteja disponivel e false caso contrario
+	 */
+	
 	public boolean consultaLocal(String email, String local) {
 		Excecao.validaEmail(email, "na consulta de local de atendimento");
 		
@@ -159,6 +243,13 @@ public class Sistema {
 		
 		return this.getTutor("email", email).consultaLocal(local);
 	}
+	
+	/**
+	 * Procura um tutor na colecao de tutores com o atributo especificado
+	 * @param atributo atributo de tutor ("email" ou "matricula")
+	 * @param parametro parametro do tutor pedido (email ou matricula do tutor)
+	 * @return retorna um tutor
+	 */
 	
 	private Tutor getTutor(String atributo, String parametro) {
 		
@@ -176,6 +267,14 @@ public class Sistema {
 		return null;
 	}
 
+	/**
+	 * Retorna o atributo de aluno pedido (entre nome, telefone e email)
+	 * @param matricula matricula do aluno
+	 * @param atributo atributo a ser pedido ("telefone", "nome" ou "email")
+	 * @return retorna um atributo de um aluno
+	 * @throws Exception lanca uma excecao caso algum parametro seja invalido
+	 */
+	
 	public String getInfoAluno(String matricula, String atributo) throws Exception {
 		
 		if (this.getAluno(matricula) == null)
@@ -183,6 +282,16 @@ public class Sistema {
 		
 		return this.getAluno(matricula).getInfoAluno(atributo);
 	}
+	
+	/**
+	 * Cadastra ajuda no sistema em um tutor da disciplina especificada no horario, dia e local de interesse especificados
+	 * @param matrAluno matricula do aluno que pediu ajuda
+	 * @param disciplina disciplina que o aluno pediu ajuda
+	 * @param horario horario de ajuda
+	 * @param dia dia da ajuda
+	 * @param localInteresse local de interesse da ajuda
+	 * @return retorna a posicao da ajuda na colecao
+	 */
 	
 	public int pedirAjudaPresencial (String matrAluno, String disciplina, String horario, String dia, String localInteresse) {
 		
@@ -217,6 +326,13 @@ public class Sistema {
 		return this.ajudas.size();
 	}
 	
+	/**
+	 * Cadastra ajuda no sistema em um tutor da disciplina especificada
+	 * @param matrAluno matricula do aluno que pediu a ajuda
+	 * @param disciplina disciplina que o aluno pediu ajuda
+	 * @return retorna a posicao da ajuda no sistema
+	 */
+	
 	public int pedirAjudaOnline (String matrAluno, String disciplina) {
 		Excecao.validaString(matrAluno, "Erro no pedido de ajuda online: matricula de aluno nao pode ser vazio ou em branco");
 		Excecao.validaString(disciplina, "Erro no pedido de ajuda online: disciplina nao pode ser vazio ou em branco");
@@ -245,6 +361,12 @@ public class Sistema {
 		
 		return this.ajudas.size();
 	}
+	
+	/**
+	 * Retorna uma representacao textual do tutor alocado na ajuda
+	 * @param idAjuda identificacao da ajuda no sistema
+	 * @return retorna a representacao textual do tutor alocado na ajuda
+	 */
 	
 	public String pegarTutor(int idAjuda) {
 		Excecao.validaNumeroEstritamentePositivo(idAjuda, "Erro ao tentar recuperar tutor : id nao pode menor que zero ");

@@ -2,6 +2,13 @@ package aluno;
 
 import excecoes.Excecao;
 
+/**
+ * Classe que representa um Aluno no sistema. Todo aluno tem matricula, nome, codigo do curso, email e avaliacao.
+ * Aluno pode ter telefone e o que diferencia um aluno de outro é a matricula e email
+ * 
+ *
+ */
+
 public class Aluno {
 	
 	private String matricula;
@@ -11,6 +18,14 @@ public class Aluno {
 	private String email;
 	private int avaliacao;
 	
+	/**
+	 * Constroi um aluno apartir da matricula, nome, codigo do curso, telefone (se houver, caso nao haja usar string vazia) e email
+	 * @param matricula matricula do aluno (unica)
+	 * @param nome nome do aluno
+	 * @param codigoCurso codigo do curso do aluno (numero inteiro)
+	 * @param telefone telefone do aluno, se houver
+	 * @param email email do aluno (unico)
+	 */
 	
 	public Aluno(String matricula, String nome, int codigoCurso, String telefone, String email) {
 		
@@ -27,6 +42,11 @@ public class Aluno {
 		this.avaliacao  = 5;
 		
 	}
+	
+	/**
+	 * Retorna a representacao do aluno no formato:
+	 * MATRICULA + NOME + CODIGO DO CURSO + TELEFONE (SE HOUVER) + EMAIL
+	 */
 	
 	@Override
 	public String toString() {
@@ -82,6 +102,13 @@ public class Aluno {
 	public String getEmail() {
 		return email;
 	}
+	
+	/**
+	 * Retorna o atributo pedido (entre nome, telefone e email)
+	 * @param atributo atributo pedido na chamada do metodo
+	 * @return retorna um atributo (entre nome, telefone e email)
+	 * @throws Exception
+	 */
 	
 	public String getInfoAluno(String atributo) throws Exception {
 
