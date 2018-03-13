@@ -1,5 +1,7 @@
 package quemMeAjuda;
 
+import excecoes.Excecao;
+
 public class Aluno implements Comparable<Aluno> {
 	
 	private String matricula;
@@ -10,18 +12,12 @@ public class Aluno implements Comparable<Aluno> {
 	private int avaliacao;
 	
 	
-	public Aluno(String matricula, String nome, int codigoCurso, String telefone, String email) throws Exception {
+	public Aluno(String matricula, String nome, int codigoCurso, String telefone, String email) {
 		
-		if (matricula.trim().isEmpty() || matricula == null)
-			throw new IllegalArgumentException("Erro no cadastro de aluno: Matricula nao pode ser vazia ou nula");
-		if (nome.trim().isEmpty() || nome == null)
-			throw new NullPointerException("Erro no cadastro de aluno: Nome nao pode ser vazio ou nulo");
-		if (codigoCurso <= 0)
-			throw new IllegalArgumentException("Erro no cadastro de aluno: Codigo do curso nao pode ser negativo");
-		if (email.trim().isEmpty() || email == null)
-			throw new IllegalArgumentException("Erro no cadastro de aluno: Email invalido");
-		if (!email.matches("(.+)@(.+)"))
-			throw new IllegalArgumentException("Erro no cadastro de aluno: Email invalido");
+		Excecao.validaString(matricula, "Erro no cadastro de aluno: Matricula nao pode ser vazia ou nula");
+		Excecao.validaString(nome, "Erro no cadastro de aluno: Nome nao pode ser vazio ou nulo");
+		Excecao.validaNumeroEstritamentePositivo(codigoCurso, "Erro no cadastro de aluno: Codigo do curso nao pode ser negativo");
+		Excecao.validaEmail(email, "no cadastro de aluno");
 		
 		this.matricula  = matricula;
 		this.nome = nome;

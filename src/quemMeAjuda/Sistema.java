@@ -10,6 +10,7 @@ import java.util.Set;
 import ajuda.Ajuda;
 import ajuda.AjudaOnline;
 import ajuda.AjudaPresencial;
+import excecoes.Excecao;
 
 public class Sistema {
 	
@@ -24,15 +25,14 @@ public class Sistema {
 		this.ajudas = new ArrayList<>();
 	}
 	
-	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email) throws Exception {
+	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email) {
 
 				
 		for (Aluno aluno : alunos) {
-			if (!email.matches("(.+)@(.+)"))
-				throw new IllegalArgumentException("Erro no cadastro de aluno: Email invalido");
+			Excecao.validaEmail(email, "no cadastro de aluno");
 			
 			if(aluno.getMatricula().equals(matricula))
-				throw new Exception("Erro no cadastro de aluno: Aluno de mesma matricula ja cadastrado");
+				throw new IllegalArgumentException("Erro no cadastro de aluno: Aluno de mesma matricula ja cadastrado");
 					
 			}
 
@@ -88,8 +88,7 @@ public class Sistema {
 
 	public String recuperaTutor(String matricula) throws Exception {
 
-		if (matricula.trim().isEmpty() || matricula == null)
-			throw new IllegalArgumentException();
+		Excecao.validaString(matricula, "Erro na busca por tutor: matricula nao pode ser vazia ou nula");
 		if (this.getAluno(matricula) == null)
 			throw new IllegalArgumentException("Erro na busca por tutor: Tutor nao encontrado");
 		
@@ -122,57 +121,45 @@ public class Sistema {
 	
 	public void cadastrarHorario(String email, String horario, String dia) {
 		
-		if (email.trim().isEmpty() || email == null)
-			throw new IllegalArgumentException("Erro no cadastrar horario: email nao pode ser vazio ou em branco");
-		if (!email.matches("(.+)@(.+)"))
-			throw new IllegalArgumentException("Erro no cadastrar horario: Email invalido");
-		if (this.recuperaTutorPorEmail(email) == null)
+		Excecao.validaEmail(email, "no cadastrar horario");
+		if (this.getTutorPorEmail(email) == null)
 			throw new NullPointerException("Erro no cadastrar horario: tutor nao cadastrado");
 		
-		this.recuperaTutorPorEmail(email).cadastraHorario(horario, dia);
+		this.getTutorPorEmail(email).cadastraHorario(horario, dia);
 		
 	}
 	
 	public void cadastrarLocalDeAtendimento(String email, String local) {
 		
-		if (email.trim().isEmpty() || email == null)
-			throw new IllegalArgumentException("Erro no cadastrar local de atendimento: email nao pode ser vazio ou em branco");
-		if (!email.matches("(.+)@(.+)"))
-			throw new IllegalArgumentException("Erro no cadastrar local de atendimento: Email invalido");
-		if (this.recuperaTutorPorEmail(email) == null)
+		Excecao.validaEmail(email, "no cadastrar local de atendimento");
+		if (this.getTutorPorEmail(email) == null)
 			throw new NullPointerException("Erro no cadastrar local de atendimento: tutor nao cadastrado");
 		
-		this.recuperaTutorPorEmail(email).cadastraLocalDeAtendimento(local);
+		this.getTutorPorEmail(email).cadastraLocalDeAtendimento(local);
 		
 	}
 	
 	public boolean consultaHorario(String email, String horario, String dia) {
-		if (email.trim().isEmpty() || email == null)
-			throw new IllegalArgumentException("Erro na consulta de Horario: email nao pode ser vazio ou em branco");
-		if (!email.matches("(.+)@(.+)"))
-			throw new IllegalArgumentException("Erro na consulta de Horario: Email invalido");
+		Excecao.validaEmail(email, "na consulta de Horario");
 		
-		if (this.recuperaTutorPorEmail(email) == null)
+		if (this.getTutorPorEmail(email) == null)
 			return false;
 		
-		return this.recuperaTutorPorEmail(email).consultaHorario(horario, dia);
+		return this.getTutorPorEmail(email).consultaHorario(horario, dia);
 		
 		
 	}
 	
 	public boolean consultaLocal(String email, String local) {
-		if (email.trim().isEmpty() || email == null)
-			throw new IllegalArgumentException("Erro na consulta de local de atendimento: email nao pode ser vazio ou em branco");
-		if (!email.matches("(.+)@(.+)"))
-			throw new IllegalArgumentException("Erro na consulta de local de atendimento: Email invalido");
+		Excecao.validaEmail(email, "na consulta de local de atendimento");
 		
-		if (this.recuperaTutorPorEmail(email) == null)
+		if (this.getTutorPorEmail(email) == null)
 			return false;
 		
-		return this.recuperaTutorPorEmail(email).consultaLocal(local);
+		return this.getTutorPorEmail(email).consultaLocal(local);
 	}
 	
-	private Tutor recuperaTutorPorEmail(String email) {
+	private Tutor getTutorPorEmail(String email) {
 		
 		Aluno temp = null;
 		
@@ -198,16 +185,12 @@ public class Sistema {
 	}
 	
 	public int pedirAjudaPresencial (String matrAluno, String disciplina, String horario, String dia, String localInteresse) {
-		if (matrAluno.trim().isEmpty() || matrAluno == null)
-			throw new NullPointerException("Erro no pedido de ajuda presencial: matricula de aluno nao pode ser vazio ou em branco");
-		if (disciplina.trim().isEmpty() || disciplina == null)
-			throw new NullPointerException("Erro no pedido de ajuda presencial: disciplina nao pode ser vazio ou em branco");
-		if (horario.trim().isEmpty() || horario == null)
-			throw new NullPointerException("Erro no pedido de ajuda presencial: horario nao pode ser vazio ou em branco");
-		if (dia.trim().isEmpty() || dia == null)
-			throw new NullPointerException("Erro no pedido de ajuda presencial: dia nao pode ser vazio ou em branco");
-		if (localInteresse.trim().isEmpty() || localInteresse == null)
-			throw new NullPointerException("Erro no pedido de ajuda presencial: local de interesse nao pode ser vazio ou em branco");
+		
+		Excecao.validaString(matrAluno, "Erro no pedido de ajuda presencial: matricula de aluno nao pode ser vazio ou em branco");
+		Excecao.validaString(disciplina, "Erro no pedido de ajuda presencial: disciplina nao pode ser vazio ou em branco");
+		Excecao.validaString(horario, "Erro no pedido de ajuda presencial: horario nao pode ser vazio ou em branco");
+		Excecao.validaDiaDaSemana(dia, "no pedido de ajuda presencial");
+		Excecao.validaString(localInteresse, "Erro no pedido de ajuda presencial: local de interesse nao pode ser vazio ou em branco");
 		if (this.getAluno(matrAluno) == null)
 			throw new NullPointerException("Erro ao pedia Ajuda: Aluno inexistente");
 		
@@ -229,10 +212,8 @@ public class Sistema {
 	}
 	
 	public int pedirAjudaOnline (String matrAluno, String disciplina) {
-		if (matrAluno.trim().isEmpty() || matrAluno == null)
-			throw new NullPointerException("Erro no pedido de ajuda online: matricula de aluno nao pode ser vazio ou em branco");
-		if (disciplina.trim().isEmpty() || disciplina == null)
-			throw new NullPointerException("Erro no pedido de ajuda online: disciplina nao pode ser vazio ou em branco");
+		Excecao.validaString(matrAluno, "Erro no pedido de ajuda online: matricula de aluno nao pode ser vazio ou em branco");
+		Excecao.validaString(disciplina, "Erro no pedido de ajuda online: disciplina nao pode ser vazio ou em branco");
 		if (this.getAluno(matrAluno) == null)
 			throw new NullPointerException("Erro ao pedia Ajuda: Aluno inexistente");
 		
@@ -255,33 +236,27 @@ public class Sistema {
 	
 	public String pegarTutor(int idAjuda) {
 		
-		if (idAjuda <= 0)
-			throw new IndexOutOfBoundsException("Erro ao tentar recuperar tutor : id nao pode menor que zero ");
-		if (idAjuda > this.ajudas.size())
-			throw new IndexOutOfBoundsException("Erro ao tentar recuperar tutor : id nao encontrado ");
+		Excecao.validaNumeroEstritamentePositivo(idAjuda, "Erro ao tentar recuperar tutor : id nao pode menor que zero ");
+		Excecao.validaNumeroRange(idAjuda, this.ajudas.size(), "Erro ao tentar recuperar tutor : id nao encontrado ");
 		
 		return this.ajudas.get(idAjuda-1).pegarTutor();
 	}
 	
 	public String getInfoAjuda(int idAjuda, String atributo) {
-		if (idAjuda <= 0)
-			throw new IndexOutOfBoundsException("Erro ao tentar recuperar info da ajuda : id nao pode menor que zero ");
-		if (idAjuda > this.ajudas.size())
-			throw new IndexOutOfBoundsException("Erro ao tentar recuperar info da ajuda : id nao encontrado ");
+		
+		Excecao.validaNumeroEstritamentePositivo(idAjuda, "Erro ao tentar recuperar info da ajuda : id nao pode menor que zero ");
+		Excecao.validaNumeroRange(idAjuda, this.ajudas.size(), "Erro ao tentar recuperar info da ajuda : id nao encontrado ");
 		
 		return this.ajudas.get(idAjuda-1).getInfoAjuda(atributo);
 	}
 	
 	public void avaliarTutor (int idAjuda, int nota) {
 		
-		if (nota < 0)
-			throw new RuntimeException("Erro na avaliacao de tutor: nota nao pode ser menor que 0");
-		if (nota > 5)
-			throw new RuntimeException("Erro na avaliacao de tutor: nota nao pode ser maior que 5");
-		if (idAjuda <= 0)
-			throw new IndexOutOfBoundsException("Erro na avaliacao de tutor: id nao pode menor que zero ");
-		if (idAjuda > this.ajudas.size())
-			throw new IndexOutOfBoundsException("Erro na avaliacao de tutor: id nao encontrado ");
+		Excecao.validaNumeroPositivo(nota, "Erro na avaliacao de tutor: nota nao pode ser menor que 0");
+		Excecao.validaNumeroRange(nota, 5, "Erro na avaliacao de tutor: nota nao pode ser maior que 5");		
+		Excecao.validaNumeroEstritamentePositivo(idAjuda, "Erro na avaliacao de tutor: id nao pode menor que zero ");
+		Excecao.validaNumeroRange(idAjuda, this.ajudas.size(), "Erro na avaliacao de tutor: id nao encontrado ");
+		
 		if (this.ajudas.get(idAjuda-1).getAvaliado() == true)
 			throw new RuntimeException("Erro na avaliacao de tutor: Ajuda ja avaliada");
 		
@@ -313,8 +288,7 @@ public class Sistema {
 	
 	public void doar(String matriculaTutor, int totalCentavos) {
 		
-		if (totalCentavos < 0)
-			throw new IndexOutOfBoundsException("Erro na doacao para tutor: totalCentavos nao pode ser menor que zero");
+		Excecao.validaNumeroPositivo(totalCentavos, "Erro na doacao para tutor: totalCentavos nao pode ser menor que zero");
 		if (this.getAluno(matriculaTutor) == null)
 			throw new NullPointerException("Erro na doacao para tutor: Tutor nao encontrado");
 		if (!this.tutores.containsKey(this.getAluno(matriculaTutor)))
@@ -346,10 +320,10 @@ public class Sistema {
 			throw new IllegalArgumentException("Erro na consulta de total de dinheiro do tutor: emailTutor nao pode ser vazio ou nulo");
 		if (!emailTutor.matches("(.+)@(.+)"))
 			throw new IllegalArgumentException("Erro na consulta de total de dinheiro do tutor: Email invalido");
-		if (this.recuperaTutorPorEmail(emailTutor) == null)
+		if (this.getTutorPorEmail(emailTutor) == null)
 			throw new NullPointerException("Erro na consulta de total de dinheiro do tutor: Tutor nao encontrado");
 		
-		return this.recuperaTutorPorEmail(emailTutor).totalDinheiroTutor();
+		return this.getTutorPorEmail(emailTutor).totalDinheiroTutor();
 		
 	}
 	

@@ -16,7 +16,7 @@ public class Facade {
 		sistema = new Sistema();
 	}
 	
-	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email) throws Exception {
+	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email) {
 		sistema.cadastrarAluno(nome, matricula, codigoCurso, telefone, email);
 	}
 	
