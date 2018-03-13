@@ -1,17 +1,17 @@
-package quemMeAjuda;
+package tutor;
 
-import java.awt.List;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import aluno.Aluno;
 import excecoes.Excecao;
 
 public class Tutor {
 	
+	private Aluno aluno;
 	private Map<String, Integer> disciplinas;
 	private Map<String, String> horarios;
 	private Set<String> locais;
@@ -19,12 +19,13 @@ public class Tutor {
 	private int dinheiro;
 	TutorType nivel;
 	
-	public Tutor() {
+	public Tutor(Aluno aluno) {
+		this.aluno = aluno;
 		this.disciplinas = new HashMap<>();
 		this.horarios = new HashMap<>();
 		this.locais = new HashSet<>();
 		this.avaliacao = 4;
-		this.nivel = this.nivel.Tutor;
+		this.nivel = TutorType.Tutor;
 		this.dinheiro = 0;
 	}
 	
@@ -105,5 +106,46 @@ public class Tutor {
     public int totalDinheiroTutor() {
     	return this.dinheiro;
     }
+    
+    public String getNome() {
+    	return this.aluno.getNome();
+    }
+    
+    public String getMatricula() {
+		return this.aluno.getMatricula();
+	}
+    
+    public String getEmail() {
+		return this.aluno.getEmail();
+	}
+
+    public int getProficiencia(String disciplina) {
+    	return this.disciplinas.get(disciplina);
+    }
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((aluno == null) ? 0 : aluno.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Tutor other = (Tutor) obj;
+		if (aluno == null) {
+			if (other.aluno != null)
+				return false;
+		} else if (!aluno.equals(other.aluno))
+			return false;
+		return true;
+	}
 
 }

@@ -5,12 +5,11 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import facade.Facade;
+import sistema.Sistema;
 
 public class SistemaTest {
 
 	Sistema sistema;
-	private final String NL = System.lineSeparator();
 	
 	@Before
 	public void Before() throws Exception {
@@ -40,6 +39,15 @@ public class SistemaTest {
 		assertEquals(false, sistema.consultaHorario("aluno@ccc.ufcg.edu.br", "10:00", "ter"));
 		assertEquals(true, sistema.consultaHorario("aluna@ccc.ufcg.edu.br", "10:00", "ter"));
 		assertEquals(false, sistema.consultaHorario("aluna@ccc.ufcg.edu.br", "08:00", "seg"));
+		
+		System.out.println(this.sistema.listarAlunos());
+		
+		this.sistema.configurarOrdem("nome");
+		assertEquals("112118009 - Aluna1 - 123 - 000-999-999 - aluna@ccc.ufcg.edu.br, 110118009 - Aluno1 - 123 - aluno@ccc.ufcg.edu.br", sistema.listarTutores());
+		this.sistema.configurarOrdem("matricula");
+		assertEquals("110118009 - Aluno1 - 123 - aluno@ccc.ufcg.edu.br, 112118009 - Aluna1 - 123 - 000-999-999 - aluna@ccc.ufcg.edu.br", sistema.listarTutores());
+		this.sistema.configurarOrdem("email");
+		assertEquals("112118009 - Aluna1 - 123 - 000-999-999 - aluna@ccc.ufcg.edu.br, 110118009 - Aluno1 - 123 - aluno@ccc.ufcg.edu.br", sistema.listarTutores());
 	}
 	
 	@Test
@@ -51,9 +59,6 @@ public class SistemaTest {
 		sistema.avaliarTutor(2, 0);
 		sistema.avaliarTutor(3, 0);
 		sistema.doar("110118009", 100);
-		System.out.println(sistema.pegarNivel("110118009"));
-		System.out.println(sistema.totalDinheiroTutor("aluno@ccc.ufcg.edu.br"));
-		System.out.println(sistema.totalDinheiroSistema());
 	}
 	// Excecoes
 	
@@ -97,7 +102,7 @@ public class SistemaTest {
 		sistema.recuperaTutor("1029238");
 	}
 	
-	@Test(expected=IllegalArgumentException.class)
+	@Test(expected=NullPointerException.class)
 	public void recuperaTutorMatriculaVazia() throws Exception {
 		sistema.recuperaTutor("   ");
 	}
@@ -113,7 +118,7 @@ public class SistemaTest {
 		sistema.listarTutores();
 	}
 	
-	@Test(expected=IllegalArgumentException.class)
+	@Test(expected=NullPointerException.class)
 	public void cadastraHorarioEmailVazio() throws Exception {
 		sistema.cadastrarHorario("   ", "08:00", "seg");
 	}
@@ -166,7 +171,7 @@ public class SistemaTest {
 		sistema.cadastrarLocalDeAtendimento("@ccc.ufcg.edu", "LCC1");
 	}
 	
-	@Test(expected=IllegalArgumentException.class)
+	@Test(expected=NullPointerException.class)
 	public void cadastraLocalEmailVazio() throws Exception {
 		sistema.cadastrarLocalDeAtendimento("   ", "LCC1");
 	}
@@ -190,7 +195,7 @@ public class SistemaTest {
 		sistema.cadastrarLocalDeAtendimento("aluno@aluno", null);
 	}
 	
-	@Test(expected=IllegalArgumentException.class)
+	@Test(expected=NullPointerException.class)
 	public void consultaHorarioEmailVazio() throws Exception {
 		sistema.consultaHorario("   ", "08:00", "seg");
 	}
@@ -205,7 +210,7 @@ public class SistemaTest {
 		sistema.consultaHorario("@ccc.ufcg.edu", "08:00", "seg");
 	}
 	
-	@Test(expected=IllegalArgumentException.class)
+	@Test(expected=NullPointerException.class)
 	public void consultaHorarioVazio() throws Exception {
 		sistema.cadastrarAluno("Aluno", "123", 1010, "", "aluno@aluno");
 		sistema.tornarTutor("123", "Disciplina", 5);
@@ -219,7 +224,7 @@ public class SistemaTest {
 		sistema.consultaHorario("aluno@aluno", null, "seg");
 	}
 	
-	@Test(expected=IllegalArgumentException.class)
+	@Test(expected=NullPointerException.class)
 	public void consultaHorarioDiaVazio() throws Exception {
 		sistema.cadastrarAluno("Aluno", "123", 1010, "", "aluno@aluno");
 		sistema.tornarTutor("123", "Disciplina", 5);
@@ -238,7 +243,7 @@ public class SistemaTest {
 		sistema.consultaLocal("@ccc.ufcg.edu", "LCC1");
 	}
 	
-	@Test(expected=IllegalArgumentException.class)
+	@Test(expected=NullPointerException.class)
 	public void consultaLocalEmailVazio() throws Exception {
 		sistema.consultaLocal("   ", "LCC1");
 	}
@@ -248,7 +253,7 @@ public class SistemaTest {
 		sistema.consultaLocal(null, "LCC1");
 	}
 	
-	@Test(expected=IllegalArgumentException.class)
+	@Test(expected=NullPointerException.class)
 	public void consultaLocalLocalVazio() throws Exception {
 		sistema.cadastrarAluno("Aluno", "123", 1010, "", "aluno@aluno");
 		sistema.tornarTutor("123", "Disciplina", 5);

@@ -5,13 +5,16 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import aluno.Aluno;
+import tutor.Tutor;
+
 public class TutorTest {
 
 	Tutor tutor;
 	
 	@Before
 	public void before() {
-		tutor = new Tutor();
+		tutor = new Tutor(new Aluno("123", "nome", 123, "", "email@email"));
 	}
 	
 	@Test
@@ -46,10 +49,10 @@ public class TutorTest {
 	
 	@Test
 	public void tipoTest() {
-		assertEquals("Tutor", tutor.nivel.toString());
+		assertEquals("Tutor", tutor.pegarNivel());
 		tutor.setAvaliacao(0);
 		tutor.setAvaliacao(0);
-		assertEquals("APRENDIZ", tutor.nivel.toString());
+		assertEquals("APRENDIZ", tutor.pegarNivel());
 		
 		tutor.setAvaliacao(5);
 		tutor.setAvaliacao(5);
@@ -62,7 +65,7 @@ public class TutorTest {
 		tutor.setAvaliacao(5);
 		tutor.setAvaliacao(5);
 		
-		assertEquals("TOP", tutor.nivel.toString());
+		assertEquals("TOP", tutor.pegarNivel());
 	}
 	
 	@Test()
@@ -72,7 +75,7 @@ public class TutorTest {
 	
 	//Excecoes
 	
-	@Test(expected=IllegalArgumentException.class)
+	@Test(expected=NullPointerException.class)
 	public void cadastraDisciplinaVazia() throws Exception {
 		tutor.cadastraDisciplina("  ", 1);
 	}
@@ -127,7 +130,7 @@ public class TutorTest {
 		tutor.cadastraLocalDeAtendimento(null);;
 	}
 	
-	@Test(expected=IllegalArgumentException.class)
+	@Test(expected=NullPointerException.class)
 	public void consultaHorarioVazio() {
 		tutor.consultaHorario("  ", "seg");
 	}
@@ -137,7 +140,7 @@ public class TutorTest {
 		tutor.consultaHorario(null, "seg");
 	}
 	
-	@Test(expected=IllegalArgumentException.class)
+	@Test(expected=NullPointerException.class)
 	public void consultaDiaVazio() {
 		tutor.consultaHorario("08:00", "  ");
 	}

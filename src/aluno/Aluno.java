@@ -1,8 +1,8 @@
-package quemMeAjuda;
+package aluno;
 
 import excecoes.Excecao;
 
-public class Aluno implements Comparable<Aluno> {
+public class Aluno {
 	
 	private String matricula;
 	private String nome;
@@ -95,13 +95,6 @@ public class Aluno implements Comparable<Aluno> {
 			throw new Exception("Erro na obtencao de informacao de aluno: Aluno nao encontrado");
 	
 	}
-	
-	@Override
-	public int compareTo(Aluno aluno) {
-		return this.nome.compareToIgnoreCase(aluno.getNome());
-	}
-	
-	
  
 }
 

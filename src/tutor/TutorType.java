@@ -1,4 +1,4 @@
-package quemMeAjuda;
+package tutor;
 
 public enum TutorType {
 	

@@ -1,49 +1,56 @@
-package quemMeAjuda;
+package sistema;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import ajuda.Ajuda;
 import ajuda.AjudaOnline;
 import ajuda.AjudaPresencial;
+import aluno.Aluno;
+import aluno.OrdemAlunoPorEmail;
+import aluno.OrdemAlunoPorMatricula;
+import aluno.OrdemAlunoPorNome;
 import excecoes.Excecao;
+import tutor.OrdemTutorPorEmail;
+import tutor.OrdemTutorPorMatricula;
+import tutor.OrdemTutorPorNome;
+import tutor.Tutor;
 
 public class Sistema {
 	
 	private List<Aluno> alunos;
-	private Map<Aluno, Tutor> tutores;
+	private List<Tutor> tutores;
 	private List<Ajuda> ajudas;
 	private int dinheiro = 0;
+	private Comparator<Aluno> ordemAluno;
+	private Comparator<Tutor> ordemTutor;
 	
 	public Sistema() {
 		this.alunos = new ArrayList<>();
-		this.tutores = new HashMap<>();
+		this.tutores = new ArrayList<>();
 		this.ajudas = new ArrayList<>();
+		this.ordemAluno = new OrdemAlunoPorNome();
+		this.ordemTutor = new OrdemTutorPorNome();
 	}
 	
 	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email) {
 
-				
 		for (Aluno aluno : alunos) {
 			Excecao.validaEmail(email, "no cadastro de aluno");
 			
 			if(aluno.getMatricula().equals(matricula))
 				throw new IllegalArgumentException("Erro no cadastro de aluno: Aluno de mesma matricula ja cadastrado");
-					
 			}
 
 		Aluno aluno = new Aluno(matricula, nome, codigoCurso, telefone, email);
 		alunos.add(aluno);
-		Collections.sort(this.alunos);
+		Collections.sort(this.alunos, this.ordemAluno);
 		
 	}
 	
 	public String recuperaAluno(String matricula) throws Exception {
-		
 		if (this.getAluno(matricula) == null)
 			throw new Exception("Erro na busca por aluno: Aluno nao encontrado");
 		
@@ -54,13 +61,10 @@ public class Sistema {
 		for (Aluno aluno : alunos) {
 			if(aluno.getMatricula().equals(matricula))
 				return aluno;
-				
 		}
 		return null;
 	}
 
-	
-	
 	public String listarAlunos() {
 		String retornaAlunos = "";
 		for (Aluno aluno : alunos) {
@@ -76,25 +80,26 @@ public class Sistema {
 		}
 		
 		Aluno aluno = this.getAluno(matricula);
+		Tutor tutor = new Tutor(aluno);
 		
-		if (this.tutores.containsKey(aluno)) {
-			this.tutores.get(aluno).cadastraDisciplina(disciplina, proficiencia);
+		if (this.tutores.contains(tutor)) {
+			this.getTutor("matricula", matricula).cadastraDisciplina(disciplina, proficiencia);
 		} else {
-			this.tutores.put(aluno, new Tutor());
-			this.tutores.get(aluno).cadastraDisciplina(disciplina, proficiencia);
+			this.tutores.add(tutor);
+			this.getTutor("matricula", matricula).cadastraDisciplina(disciplina, proficiencia);
 		}
+		
+		Collections.sort(this.tutores, ordemTutor);
+		
 	}
 	
-
 	public String recuperaTutor(String matricula) throws Exception {
 
 		Excecao.validaString(matricula, "Erro na busca por tutor: matricula nao pode ser vazia ou nula");
 		if (this.getAluno(matricula) == null)
 			throw new IllegalArgumentException("Erro na busca por tutor: Tutor nao encontrado");
 		
-		Aluno aluno = this.getAluno(matricula);
-		
-		if (!this.tutores.containsKey(aluno))
+		if (this.getTutor("matricula", matricula) == null)
 				throw new IllegalArgumentException("Erro na busca por tutor: Tutor nao encontrado");
 		
 		return this.getAluno(matricula).toString();
@@ -103,16 +108,12 @@ public class Sistema {
 	public String listarTutores() {
 		
 		if (this.tutores.isEmpty())
-			throw new RuntimeException();
+			throw new NullPointerException("Erro ao listar tutores: Nenhum tutor cadastrado");
 		
 		String retorno = "";
-		Set<Aluno> conj = this.tutores.keySet();
-		List<Aluno> lista = new ArrayList<>(conj);
-		Collections.sort(lista);
 		
-		
-		for (Aluno aluno : lista) {
-			retorno += aluno.toString() + ", ";
+		for (Tutor tutor: this.tutores) {
+			retorno += this.getAluno(tutor.getMatricula()).toString() + ", ";
 		}
 		
 		return retorno.trim().substring(0, retorno.length() - 2);
@@ -122,30 +123,30 @@ public class Sistema {
 	public void cadastrarHorario(String email, String horario, String dia) {
 		
 		Excecao.validaEmail(email, "no cadastrar horario");
-		if (this.getTutorPorEmail(email) == null)
+		if (this.getTutor("email", email) == null)
 			throw new NullPointerException("Erro no cadastrar horario: tutor nao cadastrado");
 		
-		this.getTutorPorEmail(email).cadastraHorario(horario, dia);
+		this.getTutor("email", email).cadastraHorario(horario, dia);
 		
 	}
 	
 	public void cadastrarLocalDeAtendimento(String email, String local) {
 		
 		Excecao.validaEmail(email, "no cadastrar local de atendimento");
-		if (this.getTutorPorEmail(email) == null)
+		if (this.getTutor("email", email) == null)
 			throw new NullPointerException("Erro no cadastrar local de atendimento: tutor nao cadastrado");
 		
-		this.getTutorPorEmail(email).cadastraLocalDeAtendimento(local);
+		this.getTutor("email", email).cadastraLocalDeAtendimento(local);
 		
 	}
 	
 	public boolean consultaHorario(String email, String horario, String dia) {
 		Excecao.validaEmail(email, "na consulta de Horario");
 		
-		if (this.getTutorPorEmail(email) == null)
+		if (this.getTutor("email", email) == null)
 			return false;
 		
-		return this.getTutorPorEmail(email).consultaHorario(horario, dia);
+		return this.getTutor("email", email).consultaHorario(horario, dia);
 		
 		
 	}
@@ -153,27 +154,26 @@ public class Sistema {
 	public boolean consultaLocal(String email, String local) {
 		Excecao.validaEmail(email, "na consulta de local de atendimento");
 		
-		if (this.getTutorPorEmail(email) == null)
+		if (this.getTutor("email", email) == null)
 			return false;
 		
-		return this.getTutorPorEmail(email).consultaLocal(local);
+		return this.getTutor("email", email).consultaLocal(local);
 	}
 	
-	private Tutor getTutorPorEmail(String email) {
+	private Tutor getTutor(String atributo, String parametro) {
 		
-		Aluno temp = null;
-		
-		for (Aluno aluno : this.tutores.keySet()) {
-			if (aluno.getEmail().equals(email)) {
-				temp = aluno;
-				break;
+		if (atributo.equalsIgnoreCase("email")) {
+			for (Tutor tutor : this.tutores) {
+				if (tutor.getEmail().equals(parametro))
+					return tutor;
+			}
+		} else if (atributo.equalsIgnoreCase("matricula")) {	
+			for (Tutor tutor : this.tutores) {
+				if (tutor.getMatricula().equals(parametro))
+					return tutor;
 			}
 		}
-		
-		if (temp == null)
-			return null;
-		
-		return this.tutores.get(temp);
+		return null;
 	}
 
 	public String getInfoAluno(String matricula, String atributo) throws Exception {
@@ -195,13 +195,19 @@ public class Sistema {
 			throw new NullPointerException("Erro ao pedia Ajuda: Aluno inexistente");
 		
 		String matrTutor = null;
+		List<Tutor> lista = new ArrayList<>();
 		
-		for (Aluno aluno : this.tutores.keySet()) {
-			Tutor tutor = this.tutores.get(aluno);
+		for (Tutor tutor : this.tutores) {
 			if (tutor.consultaDisciplinas(disciplina) && tutor.consultaHorario(horario, dia) && tutor.consultaLocal(localInteresse)) {
-				matrTutor = aluno.getMatricula();
-				break;
+				lista.add(tutor);
 			}
+		}
+		
+		int profic = 0;
+		
+		for (Tutor tutor : lista) {
+			if (tutor.getProficiencia(disciplina) > profic)
+				matrTutor = tutor.getMatricula();
 		}
 		
 		Ajuda ajuda = new AjudaPresencial(matrAluno, matrTutor, disciplina, horario, dia, localInteresse);
@@ -218,13 +224,19 @@ public class Sistema {
 			throw new NullPointerException("Erro ao pedia Ajuda: Aluno inexistente");
 		
 		String matrTutor = null;
+		List<Tutor> lista = new ArrayList<>();
 		
-		for (Aluno aluno : this.tutores.keySet()) {
-			Tutor tutor = this.tutores.get(aluno);
+		for (Tutor tutor : this.tutores) {
 			if (tutor.consultaDisciplinas(disciplina)) {
-				matrTutor = aluno.getMatricula();
-				break;
+				lista.add(tutor);
 			}
+		}
+		
+		int profic = 0;
+		
+		for (Tutor tutor : lista) {
+			if (tutor.getProficiencia(disciplina) > profic)
+				matrTutor = tutor.getMatricula();
 		}
 		
 		Ajuda ajuda = new AjudaOnline(matrAluno, matrTutor, disciplina);
@@ -235,7 +247,6 @@ public class Sistema {
 	}
 	
 	public String pegarTutor(int idAjuda) {
-		
 		Excecao.validaNumeroEstritamentePositivo(idAjuda, "Erro ao tentar recuperar tutor : id nao pode menor que zero ");
 		Excecao.validaNumeroRange(idAjuda, this.ajudas.size(), "Erro ao tentar recuperar tutor : id nao encontrado ");
 		
@@ -260,9 +271,9 @@ public class Sistema {
 		if (this.ajudas.get(idAjuda-1).getAvaliado() == true)
 			throw new RuntimeException("Erro na avaliacao de tutor: Ajuda ja avaliada");
 		
-		Aluno aluno = this.getAluno(this.ajudas.get(idAjuda-1).getMatrTutor());
+		Tutor tutor = this.getTutor("matricula", this.ajudas.get(idAjuda-1).getMatrTutor());
 		
-		this.tutores.get(aluno).setAvaliacao(nota);
+		tutor.setAvaliacao(nota);
 		this.ajudas.get(idAjuda-1).setAvaliado();
 	}
 	
@@ -270,31 +281,27 @@ public class Sistema {
 		
 		if (this.getAluno(matriculaTutor) == null)
 			throw new NullPointerException("Erro ao pegar nota de tutor: Aluno nao encontrado");
-		if (!this.tutores.containsKey(this.getAluno(matriculaTutor)))
+		if (this.getTutor("matricula", matriculaTutor) == null)
 			throw new NullPointerException("Erro ao pegar nota de tutor: Tutor nao encontrado");
 		
-		return this.tutores.get(this.getAluno(matriculaTutor)).pegarNota();
+		return this.getTutor("matricula", matriculaTutor).pegarNota();
 	}
 	
 	public String pegarNivel(String matriculaTutor) {
 		
-		if (this.getAluno(matriculaTutor) == null)
-			throw new NullPointerException("Erro ao pegar nivel de tutor: Aluno nao encontrado");
-		if (!this.tutores.containsKey(this.getAluno(matriculaTutor)))
+		if (this.getTutor("matricula", matriculaTutor) == null)
 			throw new NullPointerException("Erro ao pegar nivel de tutor: Tutor nao encontrado");
 		
-		return this.tutores.get(this.getAluno(matriculaTutor)).pegarNivel();
+		return this.getTutor("matricula", matriculaTutor).pegarNivel();
 	}
 	
 	public void doar(String matriculaTutor, int totalCentavos) {
 		
 		Excecao.validaNumeroPositivo(totalCentavos, "Erro na doacao para tutor: totalCentavos nao pode ser menor que zero");
-		if (this.getAluno(matriculaTutor) == null)
-			throw new NullPointerException("Erro na doacao para tutor: Tutor nao encontrado");
-		if (!this.tutores.containsKey(this.getAluno(matriculaTutor)))
+		if (this.getTutor("matricula", matriculaTutor) == null)
 			throw new NullPointerException("Erro na doacao para tutor: Tutor nao encontrado");
 		
-		Tutor tutor = this.tutores.get(this.getAluno(matriculaTutor));
+		Tutor tutor = this.getTutor("matricula", matriculaTutor);
 		
 		double porc;
     	
@@ -320,15 +327,39 @@ public class Sistema {
 			throw new IllegalArgumentException("Erro na consulta de total de dinheiro do tutor: emailTutor nao pode ser vazio ou nulo");
 		if (!emailTutor.matches("(.+)@(.+)"))
 			throw new IllegalArgumentException("Erro na consulta de total de dinheiro do tutor: Email invalido");
-		if (this.getTutorPorEmail(emailTutor) == null)
+		if (this.getTutor("email", emailTutor) == null)
 			throw new NullPointerException("Erro na consulta de total de dinheiro do tutor: Tutor nao encontrado");
 		
-		return this.getTutorPorEmail(emailTutor).totalDinheiroTutor();
+		return this.getTutor("email", emailTutor).totalDinheiroTutor();
 		
 	}
 	
 	public int totalDinheiroSistema() {
 		return this.dinheiro;
+	}
+	
+	public void configurarOrdem(String atributo) {
+		
+		Excecao.validaString(atributo, "Erro ao configurar ordem: atributo nao pode ser vazio ou nulo");
+		
+		if (atributo.equalsIgnoreCase("nome")) {
+			this.ordemAluno = new OrdemAlunoPorNome();
+			this.ordemTutor = new OrdemTutorPorNome();
+			Collections.sort(this.alunos, this.ordemAluno);
+			Collections.sort(this.tutores, this.ordemTutor);
+		} else if (atributo.equalsIgnoreCase("email")) {
+			this.ordemAluno = new OrdemAlunoPorEmail();
+			this.ordemTutor = new OrdemTutorPorEmail();
+			Collections.sort(this.alunos, this.ordemAluno);
+			Collections.sort(this.tutores, this.ordemTutor);
+		} else if (atributo.equalsIgnoreCase("matricula")) {
+			this.ordemAluno = new OrdemAlunoPorMatricula();
+			this.ordemTutor = new OrdemTutorPorMatricula();
+			Collections.sort(this.alunos, this.ordemAluno);
+			Collections.sort(this.tutores, this.ordemTutor);
+		} else {
+			throw new IllegalArgumentException("Erro ao configurar ordem: atributo invalido");
+		}
 	}
 	
 }

@@ -1,7 +1,7 @@
 package facade;
 
 import easyaccept.EasyAccept;
-import quemMeAjuda.Sistema;
+import sistema.Sistema;
 
 public class Facade {
 	

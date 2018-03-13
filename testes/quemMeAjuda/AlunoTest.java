@@ -4,10 +4,12 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import aluno.Aluno;
+
 public class AlunoTest {
 
 				
-		@Test(expected=IllegalArgumentException.class)
+		@Test(expected=NullPointerException.class)
 		public void matriculaVaziaTest() throws Exception {
 			Aluno aluno = new Aluno("", "Laura Farias", 2, "83 3342-6543", "laura.farias@ccc.ufcg.edu.br" );
 		}
@@ -17,17 +19,17 @@ public class AlunoTest {
 			Aluno aluno = new Aluno(null,"Laura Farias", 2, "83 3342-6543", "laura.farias@ccc.ufcg.edu.br");
 		}
 	
-		@Test(expected=IllegalArgumentException.class)
+		@Test(expected=IndexOutOfBoundsException.class)
 		public void codigoCursoZeroTest() throws Exception {
 			Aluno aluno = new Aluno("116277865","Laura Farias", 0, "83 3342-6543", "laura.farias@ccc.ufcg.edu.br");
 		}
 		
-		@Test(expected=IllegalArgumentException.class)
+		@Test(expected=IndexOutOfBoundsException.class)
 		public void codigoCursoNegativoTest() throws Exception {
 			Aluno aluno = new Aluno("116277865","Laura Farias", -1, "83 3342-6543", "laura.farias@ccc.ufcg.edu.br");
 		}
 		
-		@Test(expected=IllegalArgumentException.class)
+		@Test(expected=NullPointerException.class)
 		public void emailVazioTest() throws Exception {
 			Aluno aluno = new Aluno("116277865", "Laura Farias", 2, "83 3342-6543", "" );
 		}
