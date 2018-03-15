@@ -1,8 +1,25 @@
 package ajuda;
 
+/**
+ * Classe que representa uma ajuda presencial. Na ajuda presencial o aluno indica disciplina, dia e local de interesse
+ * para receber a ajuda. AjudaPresencial herda de Ajuda.
+ * @author Lucas Oliveira e Rute Farias
+ *
+ */
+
 public class AjudaPresencial extends Ajuda {
 
 	private String horario, dia, localInteresse;
+	
+	/**
+	 * Constroi uma ajuda presencial a partir do horario , dia e local de interesse.
+	 * @param matrAluno matricula do aluno
+	 * @param matrTutor matricula do tutor
+	 * @param disciplina disciplina de interesse do aluno para receber ajuda
+	 * @param horario horario para ajuda 
+	 * @param dia dia da semana, ex: seg, ter, qua, qui, sex.
+	 * @param localInteresse local onde se pretende receber/dar ajuda.
+	 */
 	
 	public AjudaPresencial(String matrAluno, String matrTutor, String disciplina, String horario, String dia, String localInteresse) {
 		
@@ -27,6 +44,10 @@ public class AjudaPresencial extends Ajuda {
 		this.localInteresse = localInteresse;
 	}
 
+	/**
+	 * Representacao de um tutor: Tutor - ..., horario - ..., dia - ..., local - ..., disciplina - ...
+	 */
+	
 	@Override
 	public String pegarTutor() {
 		return "Tutor - "+ this.matrTutor +", horario - "+ this.horario +", dia - " + this.dia +", local - " + this.localInteresse +", disciplina - " + this.disciplina;
