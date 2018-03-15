@@ -1,6 +1,20 @@
 package ajuda;
 
+/**
+ * Classe que representa uma ajuda online, a ajuda online pode ser feita atraves do email ou hangouts.
+ * AjudaOnline herda de Ajuda. Toda ajudaOnline tem matricula do aluno, matricula do tutor e a disciplina.
+ * @author Lucas Oliveira e Rute Farias
+ *
+ */
+
 public class AjudaOnline extends Ajuda {
+	
+	/**
+	 * Constroi uma ajudaOnline a partir da matricula do aluno, matricula do tutor e disciplina
+	 * @param matrAluno matricula do aluno
+	 * @param matrTutor matricula do tutor
+	 * @param disciplina disciplina de interesse do aluno para receber ajuda
+	 */
 
 	public AjudaOnline(String matrAluno, String matrTutor, String disciplina) {
 		
@@ -15,6 +29,10 @@ public class AjudaOnline extends Ajuda {
 		this.matrTutor = matrTutor;
 		this.disciplina = disciplina;
 	}
+	
+	/**
+	 * Representacao de um tutor: Tutor - ..., disciplina - ...
+	 */
 
 	@Override
 	public String pegarTutor() {

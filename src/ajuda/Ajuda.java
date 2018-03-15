@@ -3,7 +3,7 @@ package ajuda;
 /**
  * Representacao de ajuda. Cada aluno pode solicitar ajuda a um tutor de acordo com sua necessidade, 
  * existe dois tipos de ajuda, ajuda online e ajuda presencial. Ajuda eh a classe pai, ajudaOnline e ajudaPresencial 
- * herdam de Ajuda.
+ * herdam de Ajuda. Toda ajuda possui matricula do aluno, disciplina, matricula do tutor e se o mesmo já foi avaliado ou nao.
  * @author Lucas Oliveira e Rute Farias
  *
  */
