@@ -1,5 +1,6 @@
 package tutor;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -9,8 +10,12 @@ import java.util.Set;
 import aluno.Aluno;
 import excecoes.Excecao;
 
-public class Tutor {
+public class Tutor implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Aluno aluno;
 	private Map<String, Integer> disciplinas;
 	private Map<String, String> horarios;

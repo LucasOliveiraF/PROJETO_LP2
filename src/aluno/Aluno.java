@@ -1,5 +1,7 @@
 package aluno;
 
+import java.io.Serializable;
+
 import excecoes.Excecao;
 
 /**
@@ -9,8 +11,12 @@ import excecoes.Excecao;
  *
  */
 
-public class Aluno {
+public class Aluno implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String matricula;
 	private String nome;
 	private int codigoCurso;

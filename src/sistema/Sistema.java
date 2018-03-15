@@ -1,5 +1,6 @@
 package sistema;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -31,6 +32,7 @@ public class Sistema {
 	private int dinheiro = 0;
 	private Comparator<Aluno> ordemAluno;
 	private Comparator<Tutor> ordemTutor;
+	private GerenciadorDeDados gerenciadorDeDados;
 	
 	/**
 	 * Inicializa o sistema
@@ -42,6 +44,7 @@ public class Sistema {
 		this.ajudas = new ArrayList<>();
 		this.ordemAluno = new OrdemAlunoPorNome();
 		this.ordemTutor = new OrdemTutorPorNome();
+		gerenciadorDeDados = new GerenciadorDeDados(".");
 	}
 	
 	/**
@@ -482,6 +485,11 @@ public class Sistema {
 		} else {
 			throw new IllegalArgumentException("Erro ao configurar ordem: atributo invalido");
 		}
+	}
+	
+	public void salvar() throws IOException {
+		this.gerenciadorDeDados.salvarAlunos(this.alunos);
+		this.gerenciadorDeDados.salvarTutores(this.tutores);
 	}
 	
 }

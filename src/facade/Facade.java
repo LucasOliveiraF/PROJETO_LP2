@@ -1,5 +1,7 @@
 package facade;
 
+import java.io.IOException;
+
 import easyaccept.EasyAccept;
 import sistema.Sistema;
 
@@ -99,6 +101,10 @@ public class Facade {
     
     public int totalDinheiroSistema() {
     	return this.sistema.totalDinheiroSistema();
+    }
+    
+    public void salvar() throws IOException {
+    	this.sistema.salvar();
     }
 
 }

@@ -18,6 +18,7 @@ public class SistemaTest {
 		sistema.cadastrarAluno("Aluna1", "112118009", 123, "000-999-999", "aluna@ccc.ufcg.edu.br");
 		sistema.tornarTutor("110118009", "Disciplina1", 4);
 		sistema.tornarTutor("112118009", "Disciplina1", 4);
+		sistema.salvar();
 	}
 	
 	@Test
