@@ -207,7 +207,7 @@ public class Tutor implements Serializable {
      */
     
     public String getNome() {
-    	return this.aluno.getNome();
+    	return this.aluno.getInfoAluno("nome");
     }
     
     /**
@@ -225,7 +225,7 @@ public class Tutor implements Serializable {
      */
     
     public String getEmail() {
-		return this.aluno.getEmail();
+		return this.aluno.getInfoAluno("email");
 	}
     
     /**

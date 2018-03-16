@@ -97,18 +97,6 @@ public class Aluno implements Serializable {
 		return matricula;
 	}
 	
-	public String getNome() {
-		return nome;
-	}
-	
-	public String getTelefone() {
-		return telefone;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-	
 	/**
 	 * Retorna o atributo pedido (entre nome, telefone e email)
 	 * @param atributo atributo pedido na chamada do metodo
@@ -116,7 +104,7 @@ public class Aluno implements Serializable {
 	 * @throws Exception
 	 */
 	
-	public String getInfoAluno(String atributo) throws Exception {
+	public String getInfoAluno(String atributo) {
 
 		if (atributo.equalsIgnoreCase("nome"))
 			return this.nome;			
@@ -125,7 +113,7 @@ public class Aluno implements Serializable {
 		if (atributo.equalsIgnoreCase("email"))
 			return this.email;
 		else
-			throw new Exception("Erro na obtencao de informacao de aluno: Aluno nao encontrado");
+			throw new IllegalArgumentException("Erro na obtencao de informacao de aluno: Aluno nao encontrado");
 	
 	}
  
