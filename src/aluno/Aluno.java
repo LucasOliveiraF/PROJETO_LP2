@@ -1,22 +1,15 @@
 package aluno;
 
-import java.io.Serializable;
-
 import excecoes.Excecao;
 
 /**
  * Classe que representa um Aluno no sistema. Todo aluno tem matricula, nome, codigo do curso, email e avaliacao.
  * Aluno pode ter telefone e o que diferencia um aluno de outro é a matricula e email
  * 
- *
  */
 
-public class Aluno implements Serializable {
+public class Aluno {
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	private String matricula;
 	private String nome;
 	private int codigoCurso;

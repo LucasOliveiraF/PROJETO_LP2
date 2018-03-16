@@ -2,6 +2,12 @@ package tutor;
 
 import java.util.Comparator;
 
+/**
+ * Classe que ordena tutor pela matricula
+ * @author Lucas Oliveira e Rute Farias.
+ *
+ */
+
 public class OrdemTutorPorMatricula implements Comparator<Tutor> {
 
 	@Override
