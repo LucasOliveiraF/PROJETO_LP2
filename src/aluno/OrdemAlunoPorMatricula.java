@@ -2,6 +2,12 @@ package aluno;
 
 import java.util.Comparator;
 
+/**
+ * Classe que ordena aluno pela matricula
+ * @author Lucas Oliveira e Rute Farias.
+ *
+ */
+
 public class OrdemAlunoPorMatricula implements Comparator<Aluno> {
 
 	@Override

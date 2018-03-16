@@ -1,6 +1,5 @@
 package tutor;
 
-import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -15,13 +14,9 @@ import excecoes.Excecao;
  * horarios, locais, avaliacao, dinheiro e um nivel.
  * @author Lucas Oliveira e Rute Farias.
  */
-
-public class Tutor implements Serializable {
- 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+ 
+public class Tutor {
+	
 	private Aluno aluno;
 	private Map<String, Integer> disciplinas;
 	private Map<String, String> horarios;
