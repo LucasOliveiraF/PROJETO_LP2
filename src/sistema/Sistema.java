@@ -378,6 +378,13 @@ public class Sistema {
 		return this.ajudas.get(idAjuda-1).pegarTutor();
 	}
 	
+	/**
+	 * Retorna atributo de Ajuda pedido na chamada do metodo
+	 * @param idAjuda identificacao de ajuda
+	 * @param atributo nome do atributo de ajuda
+	 * @return retorna um atributo de ajuda
+	 */
+	
 	public String getInfoAjuda(int idAjuda, String atributo) {
 		
 		Excecao.validaNumeroEstritamentePositivo(idAjuda, "Erro ao tentar recuperar info da ajuda : id nao pode menor que zero ");
@@ -385,6 +392,12 @@ public class Sistema {
 		
 		return this.ajudas.get(idAjuda-1).getInfoAjuda(atributo);
 	}
+	
+	/**
+	 * Avalia tutor da ajuda com a nota passada
+	 * @param idAjuda identificacao da ajuda
+	 * @param nota nota atribuida ao tutor
+	 */
 	
 	public void avaliarTutor (int idAjuda, int nota) {
 		
@@ -402,6 +415,12 @@ public class Sistema {
 		this.ajudas.get(idAjuda-1).setAvaliado();
 	}
 	
+	/**
+	 * Retorna a nota do tutor com a matricula passada na chamada do metodo
+	 * @param matriculaTutor matricula do tutor
+	 * @return retorna a nota de um tutor
+	 */
+	
 	public String pegarNota(String matriculaTutor) {
 		
 		if (this.getAluno(matriculaTutor) == null)
@@ -412,6 +431,12 @@ public class Sistema {
 		return this.getTutor("matricula", matriculaTutor).pegarNota();
 	}
 	
+	/**
+	 * Retorna o nivel do tutor com a matricula passada na chamada do metodo
+	 * @param matriculaTutor
+	 * @return
+	 */
+	
 	public String pegarNivel(String matriculaTutor) {
 		
 		if (this.getTutor("matricula", matriculaTutor) == null)
@@ -419,6 +444,12 @@ public class Sistema {
 		
 		return this.getTutor("matricula", matriculaTutor).pegarNivel();
 	}
+	
+	/**
+	 * Doa uma quantidade de dinheiro em centavos para o tutor com a matricula passada na chamada do metodo
+	 * @param matriculaTutor matricula do tutor
+	 * @param totalCentavos total de dinheiro em centavos
+	 */
 	
 	public void doar(String matriculaTutor, int totalCentavos) {
 		
@@ -446,6 +477,12 @@ public class Sistema {
 		
 	}
 	
+	/**
+	 * Retorna a quantidade de dinheiro do tutor com o email passado na chamada do metodo
+	 * @param emailTutor email do tutor
+	 * @return retorna a quantidade de dinheiro de um tutor
+	 */
+	
 	public int totalDinheiroTutor(String emailTutor) {
 		
 		if (emailTutor.trim().isEmpty() || emailTutor == null)
@@ -459,9 +496,19 @@ public class Sistema {
 		
 	}
 	
+	/**
+	 * Retorna o total de dinheiro do sistema
+	 * @return retorna o total de dinheiro do sistema
+	 */
+	
 	public int totalDinheiroSistema() {
 		return this.dinheiro;
 	}
+	
+	/**
+	 * Configura a ordem que o metodos de listar tutores e alunos retorna os objetos 
+	 * @param atributo ordem da listagem ("nome", "email" ou "matricula")
+	 */
 	
 	public void configurarOrdem(String atributo) {
 		
@@ -486,6 +533,11 @@ public class Sistema {
 			throw new IllegalArgumentException("Erro ao configurar ordem: atributo invalido");
 		}
 	}
+	
+	/**
+	 * Salva os alunos e tutores em um arquivo
+	 * @throws IOException 
+	 */
 	
 	public void salvar() throws IOException {
 		this.gerenciadorDeDados.salvarAlunos(this.alunos);
